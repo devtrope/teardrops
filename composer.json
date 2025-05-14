@@ -1,0 +1,17 @@
+{
+    "name": "teardrops/teardrops",
+    "description": "Lightweight PHP Framework",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Teardrops\\Teardrops\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Quentin SCHIFFERLE",
+            "email": "dev.trope@gmail.com"
+        }
+    ],
+    "require": {}
+}
