@@ -28,9 +28,8 @@ my-project/
 │   └── Http/
 │       └── Controllers/
 ├── public/               # Public-facing directory (index.php)
-├── routes/               # Route definitions
+├── resources/            # Views
 ├── storage/              # Cache, logs, temporary files
-├── view/                 # Twig templates
 └── src/                  # Core framework files
 ```
 
