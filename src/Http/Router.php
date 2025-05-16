@@ -4,7 +4,7 @@ namespace Teardrops\Teardrops\Http;
 
 class Router
 {
-    public static function resolve(string $controller, ?string $method, string $httpMethod, array $explodedURI): void
+    public static function resolve(string $controller, ?string $method, string $httpMethod, array $parameters): void
     {
         $controllerClass = 'App\\Http\\Controllers\\' . ucfirst($controller) . 'Controller';
 
@@ -20,6 +20,6 @@ class Router
             throw new \Exception("Method not found: $methodName in $controllerClass");
         }
 
-        call_user_func_array([$controllerInstance, $methodName], array_slice($explodedURI, 2));
+        call_user_func_array([$controllerInstance, $methodName], $parameters);
     }
 }
