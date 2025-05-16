@@ -4,17 +4,14 @@ namespace Teardrops\Teardrops\Kernel;
 
 class Kernel
 {
-    public function handle(Request $request)
+    public function handle(Request $request): void
     {
-        $trimedURI = trim($request->getUri(), '/');
-        $explodedURI = explode('/', $trimedURI);
-
-        $controller = $explodedURI[0] ?: 'home';
-        $method = $explodedURI[1] ?? 'index';
+        $segments = $request->segments();
+        $controller = $segments[0] ?: 'home';
+        $method = $segments[1] ?? 'index';
 
         try {
-            $router = new Router();
-            $router->resolve($controller, $method, $explodedURI);
+            Router::resolve($controller, $method, $request->getHttpMethod(), $segments);
         } catch (\Exception $e) {
             http_response_code(404);
             echo "Error: " . $e->getMessage();

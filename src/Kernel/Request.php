@@ -4,22 +4,27 @@ namespace Teardrops\Teardrops\Kernel;
 
 class Request
 {
-    private string $method;
+    private string $httpMethod;
     private string $uri;
 
     public function __construct()
     {
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->httpMethod = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
     }
 
-    public function getMethod(): string
+    public function getHttpMethod(): string
     {
-        return strtolower($this->method);
+        return strtolower($this->httpMethod);
     }
 
     public function getUri(): string
     {
         return $this->uri;
+    }
+
+    public function segments(): array
+    {
+        return explode('/', trim(parse_url($this->getUri(), PHP_URL_PATH), '/'));
     }
 }
