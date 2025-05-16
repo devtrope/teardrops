@@ -9,8 +9,8 @@ class Request
 
     public function __construct()
     {
-        $this->httpMethod = $_SERVER['REQUEST_METHOD'];
-        $this->uri = $_SERVER['REQUEST_URI'];
+        $this->httpMethod = strval($_SERVER['REQUEST_METHOD']);
+        $this->uri = strval($_SERVER['REQUEST_URI']);
     }
 
     public function getHttpMethod(): string
@@ -25,6 +25,12 @@ class Request
 
     public function segments(): array
     {
-        return explode('/', trim(parse_url($this->getUri(), PHP_URL_PATH), '/'));
+        $parseUrl = parse_url($this->getUri(), PHP_URL_PATH);
+
+        if (! is_string($parseUrl)) {
+            return [];
+        }
+
+        return explode('/', trim($parseUrl, '/'));
     }
 }

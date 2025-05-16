@@ -8,14 +8,14 @@ use Dotenv\Dotenv;
 
 class Application
 {
-    public static function setup(string $baseDir): static
+    public static function setup(string $baseDir): Application
     {
         $envFile = file_exists($baseDir . '/.env') ? '.env' :'.env.example';
 
         $dotenv = Dotenv::createImmutable($baseDir, $envFile);
         $dotenv->load();
 
-        return new static();
+        return new Application();
     }
 
     public function run(): void

@@ -19,6 +19,12 @@ class Router
             throw new \Exception("Method not found: $methodName in $controllerClass");
         }
 
-        call_user_func_array([$controllerInstance, $methodName], $route->parameters());
+        $callable = [$controllerInstance, $methodName];
+
+        if (! is_callable($callable)) {
+            throw new \Exception("Method not callable: $methodName in $controllerClass");
+        }
+
+        call_user_func_array($callable, $route->parameters());
     }
 }
