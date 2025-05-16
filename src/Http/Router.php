@@ -1,6 +1,6 @@
 <?php
 
-namespace Teardrops\Teardrops\Kernel;
+namespace Teardrops\Teardrops\Http;
 
 class Router
 {
