@@ -5,7 +5,6 @@ namespace Teardrops\Teardrops;
 use Teardrops\Teardrops\Kernel;
 use Teardrops\Teardrops\Http\Request;
 use Dotenv\Dotenv;
-use Teardrops\Teardrops\Support\Config;
 
 class Application
 {
@@ -19,9 +18,8 @@ class Application
         return new static();
     }
 
-    public function run()
+    public function run(): void
     {
-        $kernel = new Kernel();
-        $kernel->handle(new Request());
+        Kernel::handle(new Request());
     }
 }
