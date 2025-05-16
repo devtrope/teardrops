@@ -4,6 +4,14 @@ namespace Teardrops\Teardrops\Http;
 
 class Router
 {
+    /**
+     * Resolve the route and call the appropriate controller method.
+     *
+     * @param \Teardrops\Teardrops\Http\Route $route
+     * @param string $httpMethod
+     * @throws \Exception
+     * @return void
+     */
     public static function resolve(Route $route, string $httpMethod): void
     {
         $controllerClass = 'App\\Http\\Controllers\\' . ucfirst($route->controller()) . 'Controller';
@@ -29,6 +37,15 @@ class Router
         call_user_func_array($callable, $parameters);
     }
 
+    /**
+     * Resolve the parameters for the controller method.
+     *
+     * @param object $controller
+     * @param string $methodName
+     * @param array $parameters
+     * @throws \Exception
+     * @return array
+     */
     public static function resolveParameters(object $controller, string $methodName, array $parameters): array
     {
         $reflection = new \ReflectionMethod($controller, $methodName);

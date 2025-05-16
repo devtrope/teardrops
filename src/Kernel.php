@@ -10,6 +10,12 @@ use Teardrops\Teardrops\Http\Route;
 
 class Kernel
 {
+    /**
+     * Handles the incoming request and resolves the route.
+     *
+     * @param Request $request
+     * @return void
+     */
     public static function handle(Request $request): void
     {
         try {

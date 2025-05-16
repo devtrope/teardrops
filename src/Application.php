@@ -9,6 +9,12 @@ use Dotenv\Dotenv;
 
 class Application
 {
+    /**
+     * Adds the environment variables to the application.
+     *
+     * @param string $baseDir
+     * @return Application
+     */
     public static function setup(string $baseDir): Application
     {
         $envFile = file_exists($baseDir . '/.env') ? '.env' : '.env.example';
@@ -19,6 +25,11 @@ class Application
         return new Application();
     }
 
+    /**
+     * Runs the application.
+     *
+     * @return void
+     */
     public function run(): void
     {
         Events::register('page_not_found', function (): void {
