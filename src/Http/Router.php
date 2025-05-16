@@ -2,6 +2,9 @@
 
 namespace Teardrops\Teardrops\Http;
 
+use Teardrops\Teardrops\Exceptions\BadRequestHttpException;
+use Teardrops\Teardrops\Exceptions\NotFoundHttpException;
+
 class Router
 {
     /**
@@ -17,20 +20,20 @@ class Router
         $controllerClass = 'App\\Http\\Controllers\\' . ucfirst($route->controller()) . 'Controller';
 
         if (! class_exists($controllerClass)) {
-            throw new \Exception("Controller not found: $controllerClass");
+            throw new NotFoundHttpException("Controller not found: $controllerClass");
         }
 
         $controllerInstance = new $controllerClass();
         $methodName = $route->methodName($httpMethod);
 
         if (! method_exists($controllerInstance, $methodName)) {
-            throw new \Exception("Method not found: $methodName in $controllerClass");
+            throw new NotFoundHttpException("Method not found: $methodName in $controllerClass");
         }
 
         $callable = [$controllerInstance, $methodName];
 
         if (! is_callable($callable)) {
-            throw new \Exception("Method not callable: $methodName in $controllerClass");
+            throw new NotFoundHttpException("Method not callable: $methodName in $controllerClass");
         }
 
         $parameters = self::resolveParameters($controllerInstance, $methodName, $route->parameters());
@@ -43,7 +46,7 @@ class Router
      * @param object $controller
      * @param string $methodName
      * @param array $parameters
-     * @throws \Exception
+     * @throws NotFoundHttpException
      * @return array
      */
     public static function resolveParameters(object $controller, string $methodName, array $parameters): array
@@ -52,7 +55,7 @@ class Router
         $expectedParameters = $reflection->getParameters();
 
         if (count($parameters) > count($expectedParameters)) {
-            throw new \Exception("Too many parameters provided for method: $methodName");
+            throw new BadRequestHttpException("Too many parameters provided for method: $methodName");
         }
 
         $resolvedParameters = [];
@@ -66,14 +69,14 @@ class Router
             if ($parameter->isDefaultValueAvailable()) {
                 $resolvedParameters[] = $parameter->getDefaultValue();
                 continue;
-            } 
-            
+            }
+
             if ($parameter->allowsNull()) {
                 $resolvedParameters[] = null;
                 continue;
             }
-            
-            throw new \Exception("Missing required parameter: " . $parameter->getName());
+
+            throw new BadRequestHttpException("Missing required parameter: " . $parameter->getName());
         }
 
         return $resolvedParameters;
