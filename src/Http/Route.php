@@ -62,7 +62,7 @@ class Route
             $method = ucwords($this->method, '_');
             $method = str_replace('_', '', $method);
         }
-        
+
         return strtolower($httpMethod) . ucfirst($method);
     }
 }

@@ -9,6 +9,8 @@ use Dotenv\Dotenv;
 
 class Application
 {
+    private static string $baseDir;
+
     /**
      * Adds the environment variables to the application.
      *
@@ -17,12 +19,23 @@ class Application
      */
     public static function setup(string $baseDir): Application
     {
+        self::$baseDir = $baseDir;
         $envFile = file_exists($baseDir . '/.env') ? '.env' : '.env.example';
 
         $dotenv = Dotenv::createImmutable($baseDir, $envFile);
         $dotenv->load();
 
         return new Application();
+    }
+
+    /**
+     * Returns the base directory of the application.
+     *
+     * @return string
+     */
+    public static function baseDir(): string
+    {
+        return self::$baseDir;
     }
 
     /**

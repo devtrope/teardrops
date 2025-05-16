@@ -42,7 +42,7 @@ class Router
             throw new NotFoundHttpException("Controller not found: $controllerClass");
         }
 
-        $controllerInstance = self::container()->get($controllerClass);
+        $controllerInstance = (object) self::container()->get($controllerClass);
         $methodName = $route->methodName($httpMethod);
 
         if (! method_exists($controllerInstance, $methodName)) {
@@ -56,7 +56,14 @@ class Router
         }
 
         $parameters = self::resolveParameters($controllerInstance, $methodName, $route->parameters());
-        call_user_func_array($callable, $parameters);
+
+        $response = call_user_func_array($callable, $parameters);
+
+        if ($response instanceof Response) {
+            $response->send();
+        } else {
+            throw new BadRequestHttpException("Invalid response type: " . gettype($response));
+        }
     }
 
     /**
