@@ -17,7 +17,7 @@ class Router
      */
     public static function resolve(Route $route, string $httpMethod): void
     {
-        $controllerClass = 'App\\Http\\Controllers\\' . ucfirst($route->controller()) . 'Controller';
+        $controllerClass = 'App\\Http\\Controllers\\' . $route->controllerName();
 
         if (! class_exists($controllerClass)) {
             throw new NotFoundHttpException("Controller not found: $controllerClass");

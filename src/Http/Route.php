@@ -6,8 +6,8 @@ use Teardrops\Teardrops\Support\Config;
 
 class Route
 {
-    protected string $controller;
-    protected string $method;
+    private string $controller;
+    private string $method;
     protected array $parameters = [];
 
     public function __construct(Request $request)
@@ -20,26 +20,6 @@ class Route
     }
 
     /**
-     * Get the controller name.
-     *
-     * @return string
-     */
-    public function controller(): string
-    {
-        return $this->controller;
-    }
-
-    /**
-     * Get the method name.
-     *
-     * @return string
-     */
-    public function method(): string
-    {
-        return $this->method;
-    }
-
-    /**
      * Get the parameters.
      *
      * @return array
@@ -47,6 +27,24 @@ class Route
     public function parameters(): array
     {
         return $this->parameters;
+    }
+
+    /**
+     * Get the controller name.
+     *
+     * @return string
+     */
+    public function controllerName(): string
+    {
+        $controller = ucfirst($this->controller);
+
+        // Ensure the controller name can be used even if it contains underscores
+        if (stripos($controller, '_') !== false) {
+            $controller = ucwords($controller, '_');
+            $controller = str_replace('_', '', $controller);
+        }
+
+        return $controller . 'Controller';
     }
 
     /**
