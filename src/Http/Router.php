@@ -13,7 +13,7 @@ class Router
         }
 
         $controllerInstance = new $controllerClass();
-        $methodName = $route->callable($httpMethod);
+        $methodName = $route->methodName($httpMethod);
 
         if (! method_exists($controllerInstance, $methodName)) {
             throw new \Exception("Method not found: $methodName in $controllerClass");

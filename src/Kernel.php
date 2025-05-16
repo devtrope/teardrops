@@ -5,7 +5,7 @@ namespace Teardrops\Teardrops;
 use Teardrops\Teardrops\Http\Request;
 use Teardrops\Teardrops\Http\Router;
 use Teardrops\Teardrops\Http\Route;
-use Teardrops\Teardrops\Support\Config;
+use Teardrops\Teardrops\Support\Events;
 
 class Kernel
 {
@@ -13,14 +13,15 @@ class Kernel
     {
         try {
             $route = new Route($request);
-            
+
             Router::resolve(
                 $route,
                 $request->getHttpMethod(),
             );
         } catch (\Exception $e) {
             http_response_code(404);
-            echo "Error: " . $e->getMessage();
+            Events::dispatch('page_not_found');
+            exit;
         }
     }
 }

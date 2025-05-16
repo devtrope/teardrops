@@ -13,7 +13,7 @@ class Route
     public function __construct(Request $request)
     {
         $segments = $request->segments();
-        
+
         $this->controller = $segments[0] ?: Config::get('DEFAULT_CONTROLLER', 'home');
         $this->method = $segments[1] ?? Config::get('DEFAULT_METHOD', 'index');
         $this->parameters = array_slice($segments, 2);
@@ -34,7 +34,7 @@ class Route
         return $this->parameters;
     }
 
-    public function callable(string $httpMethod): string
+    public function methodName(string $httpMethod): string
     {
         return strtolower($httpMethod) . ucfirst(string: $this->method);
     }
