@@ -2,7 +2,7 @@
     "name": "teardrops/teardrops",
     "description": "Lightweight PHP Framework",
     "type": "project",
-    "licence": "MIT",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Teardrops\\Teardrops\\": "src/",
