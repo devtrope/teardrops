@@ -60,13 +60,20 @@ class Router
         foreach ($expectedParameters as $index => $parameter) {
             if (array_key_exists($index, $parameters)) {
                 $resolvedParameters[] = $parameters[$index];
-            } elseif ($parameter->isDefaultValueAvailable()) {
-                $resolvedParameters[] = $parameter->getDefaultValue();
-            } elseif ($parameter->allowsNull()) {
-                $resolvedParameters[] = null;
-            } else {
-                throw new \Exception("Missing required parameter: " . $parameter->getName());
+                continue;
             }
+
+            if ($parameter->isDefaultValueAvailable()) {
+                $resolvedParameters[] = $parameter->getDefaultValue();
+                continue;
+            } 
+            
+            if ($parameter->allowsNull()) {
+                $resolvedParameters[] = null;
+                continue;
+            }
+            
+            throw new \Exception("Missing required parameter: " . $parameter->getName());
         }
 
         return $resolvedParameters;
