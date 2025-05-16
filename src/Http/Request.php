@@ -15,7 +15,7 @@ class Request
 
     public function getHttpMethod(): string
     {
-        return strtolower($this->httpMethod);
+        return $this->httpMethod;
     }
 
     public function getUri(): string

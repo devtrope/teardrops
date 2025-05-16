@@ -33,4 +33,9 @@ class Route
     {
         return $this->parameters;
     }
+
+    public function callable(string $httpMethod): string
+    {
+        return strtolower($httpMethod) . ucfirst(string: $this->method);
+    }
 }

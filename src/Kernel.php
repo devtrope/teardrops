@@ -15,10 +15,8 @@ class Kernel
             $route = new Route($request);
             
             Router::resolve(
-                $route->controller(),
-                $route->method(),
+                $route,
                 $request->getHttpMethod(),
-                $route->parameters()
             );
         } catch (\Exception $e) {
             http_response_code(404);
