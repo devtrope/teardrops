@@ -57,6 +57,14 @@ class Route
      */
     public function methodName(string $httpMethod): string
     {
-        return strtolower($httpMethod) . ucfirst(string: $this->method);
+        $method = $this->method;
+
+        // Ensure the method name can be used even if it contains underscores
+        if (stripos($this->method, '_') !== false) {
+            $method = ucwords($this->method, '_');
+            $method = str_replace('_', '', $method);
+        }
+        
+        return strtolower($httpMethod) . ucfirst($method);
     }
 }
