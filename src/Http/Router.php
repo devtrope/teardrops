@@ -2,11 +2,30 @@
 
 namespace Teardrops\Teardrops\Http;
 
+use DI\Container;
+use DI\ContainerBuilder;
 use Teardrops\Teardrops\Exceptions\BadRequestHttpException;
 use Teardrops\Teardrops\Exceptions\NotFoundHttpException;
 
 class Router
 {
+    private static ?Container $container = null;
+
+    /**
+     * Get the DI container instance.
+     *
+     * @return \DI\Container
+     */
+    public static function container(): Container
+    {
+        if (! self::$container) {
+            $builder = new ContainerBuilder();
+            self::$container = $builder->build();
+        }
+
+        return self::$container;
+    }
+
     /**
      * Resolve the route and call the appropriate controller method.
      *
@@ -23,7 +42,7 @@ class Router
             throw new NotFoundHttpException("Controller not found: $controllerClass");
         }
 
-        $controllerInstance = new $controllerClass();
+        $controllerInstance = self::container()->get($controllerClass);
         $methodName = $route->methodName($httpMethod);
 
         if (! method_exists($controllerInstance, $methodName)) {
