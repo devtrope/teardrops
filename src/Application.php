@@ -4,12 +4,18 @@ namespace Teardrops\Teardrops;
 
 use Teardrops\Teardrops\Kernel;
 use Teardrops\Teardrops\Http\Request;
+use Dotenv\Dotenv;
+use Teardrops\Teardrops\Support\Config;
 
 class Application
 {
-    public static function setup(): static
+    public static function setup(string $baseDir): static
     {
-        // TODO: Load environment variables
+        $envFile = file_exists($baseDir . '/.env') ? '.env' :'.env.example';
+
+        $dotenv = Dotenv::createImmutable($baseDir, $envFile);
+        $dotenv->load();
+
         return new static();
     }
 
