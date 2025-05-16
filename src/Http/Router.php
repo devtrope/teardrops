@@ -25,6 +25,33 @@ class Router
             throw new \Exception("Method not callable: $methodName in $controllerClass");
         }
 
-        call_user_func_array($callable, $route->parameters());
+        $parameters = self::resolveParameters($controllerInstance, $methodName, $route->parameters());
+        call_user_func_array($callable, $parameters);
+    }
+
+    public static function resolveParameters(object $controller, string $methodName, array $parameters): array
+    {
+        $reflection = new \ReflectionMethod($controller, $methodName);
+        $expectedParameters = $reflection->getParameters();
+
+        if (count($parameters) > count($expectedParameters)) {
+            throw new \Exception("Too many parameters provided for method: $methodName");
+        }
+
+        $resolvedParameters = [];
+
+        foreach ($expectedParameters as $index => $parameter) {
+            if (array_key_exists($index, $parameters)) {
+                $resolvedParameters[] = $parameters[$index];
+            } elseif ($parameter->isDefaultValueAvailable()) {
+                $resolvedParameters[] = $parameter->getDefaultValue();
+            } elseif ($parameter->allowsNull()) {
+                $resolvedParameters[] = null;
+            } else {
+                throw new \Exception("Missing required parameter: " . $parameter->getName());
+            }
+        }
+
+        return $resolvedParameters;
     }
 }
