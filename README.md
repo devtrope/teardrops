@@ -1,6 +1,6 @@
 # Teardrops
 
-Teardrops is a lightweight PHP micro-framework built for developers who want full control while ejoying a clean, modern structure inspired by larger frameworks.
+Teardrops is a lightweight PHP micro-framework built for developers who want full control while enjoying a clean, modern structure inspired by larger frameworks.
 
 ## Installation
 
