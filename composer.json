@@ -1,5 +1,5 @@
 {
-    "name": "teardrops/framework",
+    "name": "teardrops/teardrops",
     "description": "A lightweight PHP framework for building web applications.",
     "type": "project",
     "license": "MIT",
