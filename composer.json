@@ -5,7 +5,7 @@
         }
     },
     "require": {
-        "teardrops/framework": "^0.0.2"
+        "teardrops/framework": "^0.0.3"
     },
     "prefer-stable": true
 }

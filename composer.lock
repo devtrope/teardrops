@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6dbd6a6c5222ea99a2f1d1e61aac4b69",
+    "content-hash": "a1e1a5072bb9294adf5adf55c730c6e0",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -452,16 +452,16 @@
         },
         {
             "name": "teardrops/framework",
-            "version": "v0.0.2",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/devtrope/ludens.git",
-                "reference": "c4ea0e7ba83aa09acbc2ad4b96e5f9e40de0e7ec"
+                "reference": "ad156f1fcd796f35de14453faeee79b352583672"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/devtrope/ludens/zipball/c4ea0e7ba83aa09acbc2ad4b96e5f9e40de0e7ec",
-                "reference": "c4ea0e7ba83aa09acbc2ad4b96e5f9e40de0e7ec",
+                "url": "https://api.github.com/repos/devtrope/ludens/zipball/ad156f1fcd796f35de14453faeee79b352583672",
+                "reference": "ad156f1fcd796f35de14453faeee79b352583672",
                 "shasum": ""
             },
             "require": {
@@ -490,9 +490,9 @@
             "description": "A lightweight PHP framework for building web applications.",
             "support": {
                 "issues": "https://github.com/devtrope/ludens/issues",
-                "source": "https://github.com/devtrope/ludens/tree/v0.0.2"
+                "source": "https://github.com/devtrope/ludens/tree/v0.0.3"
             },
-            "time": "2025-05-23T14:02:31+00:00"
+            "time": "2025-05-23T14:33:46+00:00"
         },
         {
             "name": "twig/twig",
