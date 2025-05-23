@@ -1,0 +1,11 @@
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "teardrops/framework": "^0.0.2"
+    },
+    "prefer-stable": true
+}
