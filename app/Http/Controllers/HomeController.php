@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Ludens\Http\Response;
 use Composer\InstalledVersions;
 
-class HomeController
+class HomeController extends AppController
 {
-    public function getIndex()
+    public function getIndex(): Response
     {
         return view('base.html.twig', [
             'title' => 'Home',
