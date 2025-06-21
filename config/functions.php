@@ -15,6 +15,10 @@ function connectDatabase(): PDO {
         file_get_contents($databaseFile), true
     );
 
+    if ($database === null) {
+        throw new RuntimeException('Invalid JSON in configuration file.');
+    }
+
     return new PDO(
         'mysql:host=' . $database['host'] . ';port=' . $database['port'] . ';dbname=' . $database['dbname'] . ';charset=' . $database['charset'],
         $database['username'],
