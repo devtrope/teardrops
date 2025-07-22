@@ -9,6 +9,7 @@
     },
     "require": {
         "php-di/php-di": "^7.0",
-        "twig/twig": "3.14.0"
+        "twig/twig": "3.14.0",
+        "vlucas/phpdotenv": "^5.6"
     }
 }
