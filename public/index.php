@@ -2,4 +2,4 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-echo \Teardrops\Teardrops\Config\Config::getBaseURL() . "\n";
+\Teardrops\Teardrops\Config\Routing\Router::run($_SERVER['REQUEST_URI']);

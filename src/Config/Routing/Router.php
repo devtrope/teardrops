@@ -18,13 +18,13 @@ class Router extends Routing
             $controller = ucfirst(\Teardrops\Teardrops\Config\Config::DEFAULT_CONTROLLER) . 'Controller';
         }
 
-        $controllerFile = 'Http//Controller//' . $controller . '.php';
+        $controllerFile = dirname(__DIR__) . "//..//Http//Controller//" . $controller . '.php';
         if (! file_exists($controllerFile)) {
             throw new \Exception("Controller file {$controllerFile} does not exist.");
         }
 
         require_once $controllerFile;
-        $controller = "Http\\Controller\\" . $controller;
+        $controller = "\\Teardrops\\Teardrops\\Http\\Controller\\" . $controller;
 
         if (! class_exists($controller)) {
             throw new \Exception("Controller class {$controller} does not exist.");
