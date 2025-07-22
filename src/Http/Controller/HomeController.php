@@ -2,10 +2,12 @@
 
 namespace Teardrops\Teardrops\Http\Controller;
 
-class HomeController
+use Teardrops\Teardrops\Http\Controller;
+
+class HomeController extends Controller
 {
     public function getIndex(): void
     {
-        echo "Welcome to the Home Page!";
+        $this->render('home.html.twig');
     }
 }
