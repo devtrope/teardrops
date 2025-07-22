@@ -1,0 +1,10 @@
+{
+    "name": "devtrope/teardrops",
+    "description": "A simple PHP application",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Teardrops\\Teardrops\\": "src/"
+        }
+    }
+}
