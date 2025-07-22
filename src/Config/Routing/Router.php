@@ -3,9 +3,19 @@
 namespace Teardrops\Teardrops\Config\Routing;
 
 use ReflectionMethod;
+use DI\Container;
+use DI\ContainerBuilder;
 
 class Router extends Routing
 {
+    private Container $container;
+
+    public function __construct()
+    {
+        $containerBuilder = new ContainerBuilder();
+        $this->container = $containerBuilder->build();
+    }
+
     public static function run(string $uri): void
     {
         $request = new Request($uri);
@@ -30,7 +40,7 @@ class Router extends Routing
             throw new \Exception("Controller class {$controller} does not exist.");
         }
 
-        $controllerInstance = new $controller();
+        $controllerInstance = (object)(new self)->container->get($controller);
 
         if (! method_exists($controllerInstance, $method)) {
             throw new \Exception("Method {$method} does not exist in controller {$controller}.");

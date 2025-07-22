@@ -6,5 +6,8 @@
         "psr-4": {
             "Teardrops\\Teardrops\\": "src/"
         }
+    },
+    "require": {
+        "php-di/php-di": "^7.0"
     }
 }
