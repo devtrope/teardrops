@@ -54,6 +54,18 @@ class HttpRequest
     }
 
     /**
+     * Returns a specific header by name.
+     *
+     * @param string $name The name of the header to retrieve.
+     * @return string|null The value of the header or null if not found.
+     */
+    public function getHeader(string $name): ?string
+    {
+        $name = ucwords(strtolower($name), '-');
+        return $this->headers[$name] ?? null;
+    }
+
+    /**
      * Returns the body content of the request.
      *
      * @return string
@@ -94,6 +106,22 @@ class HttpRequest
     }
 
     /**
+     * Returns a specific query parameter by key.
+     *
+     * @param string $key The key of the query parameter to retrieve.
+     * @param string|null $default The default value to return if the key does not exist.
+     * @return string|null The value of the query parameter or the default value if not found.
+     */
+    public function getQueryParam(string $key, ?string $default = null): string|null
+    {
+        if (array_key_exists($key, $this->query)) {
+            return $this->query[$key];
+        }
+
+        return $default;
+    }
+
+    /**
      * Returns the $_POST superglobal array.
      *
      * @return array
@@ -101,6 +129,22 @@ class HttpRequest
     public function getPost(): array
     {
         return $this->post;
+    }
+
+    /**
+     * Returns a specific POST parameter by key.
+     *
+     * @param string $key The key of the POST parameter to retrieve.
+     * @param string|null $default The default value to return if the key does not exist.
+     * @return string|null The value of the POST parameter or the default value if not found.
+     */
+    public function getPostParam(string $key, ?string $default = null): string|null
+    {
+        if (array_key_exists($key, $this->post)) {
+            return $this->post[$key];
+        }
+
+        return $default;
     }
 
     /**
