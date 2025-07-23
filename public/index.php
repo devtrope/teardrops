@@ -7,8 +7,8 @@ $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__), $envFile);
 $dotenv->load();
 
 $request = new \Teardrops\Teardrops\Config\Routing\HttpRequest();
-var_dump($request->getHeader('Host'));
-var_dump($request->getQueryParam('test'));
+var_dump($request->getPath());
+var_dump($request->getSegment(0));
 die();
 
 \Teardrops\Teardrops\Http\Model::initialize();

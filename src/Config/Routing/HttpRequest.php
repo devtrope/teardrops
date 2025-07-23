@@ -20,6 +20,8 @@ class HttpRequest
     private array $query;
     private array $post;
     private string $uri;
+    private string $path;
+    private array $segments;
 
     public function __construct()
     {
@@ -31,6 +33,8 @@ class HttpRequest
         $this->query = $_GET ?? $_REQUEST ?? [];
         $this->post = $_POST ?? [];
         $this->uri = $_SERVER['REQUEST_URI'] ?? '';
+
+        $this->parseURI();
     }
 
     /**
@@ -158,6 +162,42 @@ class HttpRequest
     }
 
     /**
+     * Returns the path extracted from the request URI.
+     *
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * Returns the segments extracted from the request URI.
+     *
+     * @return array
+     */
+    public function getSegments(): array
+    {
+        return $this->segments;
+    }
+
+    /*     
+     * Returns a specific segment from the request URI by index.
+     *
+     * @param int $index The index of the segment to retrieve.
+     * @param string|null $default The default value to return if the segment does not exist.
+     * @return string|null The segment value or the default value if not found.
+     */
+    public function getSegment(int $index, ?string $default = null): string|null
+    {
+        if (isset($this->segments[$index])) {
+            return $this->segments[$index];
+        }
+
+        return $default;
+    }
+
+    /**
      * Extracts headers from the $_SERVER superglobal.
      *
      * @return array
@@ -194,5 +234,16 @@ class HttpRequest
     private function extractBody(): string
     {
         return file_get_contents('php://input') ?: '';
+    }
+
+    /**
+     * Parses the request URI to extract the path and parameters.
+     */
+    private function parseURI(): void
+    {
+        $this->path = parse_url($this->uri, PHP_URL_PATH) ?? '/';
+        
+        $cleanPath = trim($this->path, '/');
+        $this->segments = $cleanPath === '' ? [] : explode('/', $cleanPath);
     }
 }
