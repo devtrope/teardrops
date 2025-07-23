@@ -48,6 +48,21 @@ class HttpRequest
     }
 
     /**
+     * Returns a specific server parameter by name.
+     *
+     * @param string $key The name of the server parameter to retrieve.
+     * @return string|null The value of the server parameter or null if not found.
+     */
+    public function getServerParam(string $key): string|null
+    {
+        if (array_key_exists($key, $this->server)) {
+            return $this->server[$key];
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the headers extracted from the $_SERVER superglobal.
      *
      * @return array

@@ -13,7 +13,9 @@ class Config
             return null;
         }
 
-        return $_SERVER['SERVER_NAME'];
+        $request = new \Teardrops\Teardrops\Config\Routing\HttpRequest();
+
+        return $request->getServerParam('SERVER_NAME');
     }
 
     public static function isDevelopment(): bool
