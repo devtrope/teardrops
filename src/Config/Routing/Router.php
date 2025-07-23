@@ -2,11 +2,12 @@
 
 namespace Teardrops\Teardrops\Config\Routing;
 
-use ReflectionMethod;
 use DI\Container;
+use ReflectionMethod;
 use DI\ContainerBuilder;
+use Teardrops\Teardrops\Config\Config;
 
-class Router extends Routing
+class Router
 {
     private Container $container;
 
@@ -16,18 +17,44 @@ class Router extends Routing
         $this->container = $containerBuilder->build();
     }
 
-    public static function run(string $uri): void
+    public function run(): void
     {
-        $request = new Request($uri);
-        self::match($request->controller, $request->method, $request->params);
+        $request = new HttpRequest();
+        $controller = $this->formatController(
+            $request->getSegment(0, Config::DEFAULT_CONTROLLER)
+        );
+        $method = $this->formatMethod(
+            $request->getMethod(),
+            $request->getSegment(1, Config::DEFAULT_METHOD)
+        );
+        $params = array_slice($request->getSegments(), 2);
+        $this->match($controller, $method, $params);
     }
 
-    private static function match(?string $controller, string $method, array $params): mixed
+    private function formatController(string $controller): string
     {
-        if ($controller === null) {
-            $controller = ucfirst(\Teardrops\Teardrops\Config\Config::DEFAULT_CONTROLLER) . 'Controller';
+        $controller = ucfirst($controller);
+
+        if (stripos($controller, '_') !== false) {
+            $controller = ucwords($controller, '_');
+            $controller = str_replace('_', '', $controller);
         }
 
+        return $controller . 'Controller';
+    }
+
+    private function formatMethod(string $requestMethod, string $method): string
+    {
+        if (stripos($method, '_') !== false) {
+            $method = ucwords($method, '_');
+            $method = str_replace('_', '', $method);
+        }
+
+        return strtolower($requestMethod) . ucfirst($method);
+    }
+
+    private function match(string $controller, string $method, array $params): mixed
+    {
         $controllerFile = dirname(__DIR__) . "//..//Http//Controller//" . $controller . '.php';
         if (! file_exists($controllerFile)) {
             throw new \Exception("Controller file {$controllerFile} does not exist.");

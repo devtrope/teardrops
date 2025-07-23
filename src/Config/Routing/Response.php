@@ -2,7 +2,7 @@
 
 namespace Teardrops\Teardrops\Config\Routing;
 
-class Response extends Routing
+class Response
 {
     private static string $body;
     private static array $headers = [];
