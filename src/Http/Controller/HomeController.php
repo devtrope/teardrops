@@ -8,7 +8,7 @@ class HomeController extends AppController
 {
     public function getIndex(): void
     {
-        $this->set('songs', Song::all());
+        //$this->set('songs', Song::all());
         $this->render('home.html.twig');
     }
 }

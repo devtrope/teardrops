@@ -7,11 +7,5 @@
         <p class="text-lg">
             Your application is ready to go! Teardrops is a lightweight PHP framework designed for simplicity and performance.
         </p>
-        <p>Here's a list of songs as an example:</p>
-        <div class="flex flex-col gap-4">
-            {% for song in songs %}
-                <div class="bg-white border border-gray-300 border-solid p-4 shadow">{{ song.name }} - {{ song.id }}</div>
-            {% endfor %}
-        </div>
     </div>
 {% endblock %}

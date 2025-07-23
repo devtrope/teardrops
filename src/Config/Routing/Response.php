@@ -113,6 +113,7 @@ class Response
         self::setStatusCode(500);
         self::setBody($message);
         self::send();
+        exit();
     }
 
     public static function send(): void
