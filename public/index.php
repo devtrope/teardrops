@@ -13,5 +13,9 @@ Route::get('/blog', function () {
     echo 'Blog Page';
 });
 
-$calledURI = $_SERVER['REQUEST_URI'] ?? '/';
+Route::get('/blog/{slug}', function () {
+    echo 'Blog Page avec slug';
+});
+
+$calledURI = rtrim($_SERVER['REQUEST_URI'], '/') ?? '/';
 Router::dispatch($calledURI);
