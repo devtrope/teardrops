@@ -11,3 +11,9 @@ Route::get('/', function () {
 Route::get('/blog', function () {
     echo 'Blog Page';
 });
+
+$calledURI = $_SERVER['REQUEST_URI'] ?? '/';
+call_user_func(Route::getRoutes()[$calledURI] ?? function () {
+    http_response_code(404);
+    echo '404 Not Found';
+});

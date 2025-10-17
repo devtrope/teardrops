@@ -10,4 +10,9 @@ class Route
     {
         self::$routes[$path] = $handler;
     }
+
+    public static function getRoutes(): array
+    {
+        return self::$routes;
+    }
 }
