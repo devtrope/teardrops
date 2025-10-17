@@ -28,7 +28,7 @@ class Router
                 continue;
             }
 
-            if (self::segementsMatch($explodedRoute, $explodedUri)) {
+            if (self::segmentsMatch($explodedRoute, $explodedUri)) {
                 return $handler;
             }
         }
@@ -36,7 +36,7 @@ class Router
         return null;
     }
 
-    private static function segementsMatch(array $routeSegments, array $uriSegments): bool
+    private static function segmentsMatch(array $routeSegments, array $uriSegments): bool
     {
         foreach ($routeSegments as $index => $segment) {
             // We don't care if it's a perfect match for dynamic segments like {slug} or {id}
