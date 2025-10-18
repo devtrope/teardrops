@@ -14,8 +14,8 @@ class BlogController
         echo "Displaying blog post: " . htmlspecialchars($slug);
     }
 
-    public function add(): void
+    public function add(Request $request, int $id): void
     {
-        echo 'Blog post added!';
+        echo 'Blog post added with method : ' . $request->getMethod() . ' and ID: ' . intval($id);
     }
 }

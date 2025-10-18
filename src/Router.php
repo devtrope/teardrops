@@ -25,13 +25,27 @@ class Router
                 throw new Exception("Method $method does not exist in controller $controller");
             }
 
+            $reflection = new \ReflectionMethod($instance, $method);
+            $arguments = [];
+
+            foreach ($reflection->getParameters() as $parameter) {
+                if ($parameter->getType()?->getName() === Request::class) {
+                    $arguments[] = $request;
+                    continue;
+                }
+
+                $arguments[] = self::$parameters[$parameter->getName()] ?? null;
+            }
+
             /** @var callable $callable */
             $callable = [$instance, $method];
-            call_user_func_array($callable, self::$parameters);
-        } else {
-            http_response_code(404);
-            echo '404 Not Found';
+
+            call_user_func_array($callable, $arguments);
+            return;
         }
+
+        http_response_code(404);
+        echo '404 Not Found';
     }
 
     private static function match(string $uri, array $routes): array

@@ -9,6 +9,6 @@ use Teardrops\Teardrops\Router;
 Route::get('/', [\Teardrops\Teardrops\HomeController::class, 'index']);
 Route::get('/blog', [\Teardrops\Teardrops\BlogController::class, 'index']);
 Route::get('/blog/{slug}', [\Teardrops\Teardrops\BlogController::class, 'show']);
-Route::post('/blog/add', [\Teardrops\Teardrops\BlogController::class, 'add']);
+Route::post('/blog/add/{id}', [\Teardrops\Teardrops\BlogController::class, 'add']);
 
 Router::dispatch(new Request());
