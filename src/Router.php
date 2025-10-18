@@ -57,7 +57,9 @@ class Router
         }
 
         http_response_code(404);
-        echo '404 Not Found';
+        $response = Response::render('errors/404');
+        $response->send();
+        return;
     }
 
     private static function match(string $uri, array $routes): array
