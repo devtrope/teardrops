@@ -4,12 +4,14 @@ namespace Teardrops\Teardrops;
 
 class Router
 {
+    private static array $params = [];
+
     public static function dispatch(string $uri): void
     {
         $handler = self::match($uri, Route::getRoutes());
 
         if ($handler) {
-            call_user_func($handler);
+            call_user_func_array($handler, self::$params);
         } else {
             http_response_code(404);
             echo '404 Not Found';
@@ -33,6 +35,7 @@ class Router
             }
 
             if (self::segmentsMatch($explodedRoute, $explodedUri)) {
+                self::extractParams($explodedRoute, $explodedUri);
                 return $handler;
             }
         }
@@ -54,5 +57,15 @@ class Router
         }
 
         return true;
+    }
+
+    private static function extractParams(array $routeSegments, array $uriSegments): void
+    {
+        foreach ($routeSegments as $index => $segment) {
+            if (preg_match('/^{(\w+)}$/', $segment, $matches)) {
+                $paramName = $matches[1];
+                self::$params[$paramName] = $uriSegments[$index];
+            }
+        }
     }
 }

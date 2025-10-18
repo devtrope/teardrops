@@ -13,8 +13,8 @@ Route::get('/blog', function () {
     echo 'Blog Page';
 });
 
-Route::get('/blog/{slug}', function () {
-    echo 'Blog Page avec slug';
+Route::get('/blog/{slug}', function (string $slug) {
+    echo 'Blog Page avec slug:' . $slug;
 });
 
 Route::get('/blog/all', function () {
