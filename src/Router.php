@@ -9,16 +9,19 @@ class Router
     public static function dispatch(string $uri, string $requestMethod): void
     {
         $handler = self::match($uri, Route::getRoutes($requestMethod));
+        $controller = $handler[0] ?? null;
+        $method = $handler[1] ?? null;
 
-        if ($handler) {
-            call_user_func_array($handler, self::$params);
+        if ($controller && $method) {
+            $instance = new $controller();
+            call_user_func_array([$instance, $method], self::$params);
         } else {
             http_response_code(404);
             echo '404 Not Found';
         }
     }
 
-    private static function match(string $uri, array $routes): callable|null
+    private static function match(string $uri, array $routes): array
     {
         // Search for an exact match
         if (isset($routes[$uri])) {
@@ -40,7 +43,7 @@ class Router
             }
         }
 
-        return null;
+        return [];
     }
 
     private static function segmentsMatch(array $routeSegments, array $uriSegments): bool
