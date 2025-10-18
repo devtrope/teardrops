@@ -6,8 +6,7 @@ class Router
 {
     public static function dispatch(string $uri): void
     {
-        $routes = Route::getRoutes();
-        $handler = self::match($uri, $routes);
+        $handler = self::match($uri, Route::getRoutes());
 
         if ($handler) {
             call_user_func($handler);
@@ -19,6 +18,11 @@ class Router
 
     private static function match(string $uri, array $routes): callable|null
     {
+        // Search for an exact match
+        if (isset($routes[$uri])) {
+            return $routes[$uri];
+        }
+
         $explodedUri = explode('/', trim($uri, '/'));
 
         foreach ($routes as $route => $handler) {
