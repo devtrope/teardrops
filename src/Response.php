@@ -5,11 +5,7 @@ namespace Teardrops\Teardrops;
 class Response
 {
     private string $body;
-
-    public function __construct(string $body)
-    {
-        $this->body = $body;
-    }
+    private array $headers = [];
 
     public static function render(string $viewName, array $data = []): self
     {
@@ -28,11 +24,39 @@ class Response
             $content = '';
         }
 
-        return new self($content);
+        $response = new self();
+        $response->setBody($content);
+        $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
+        
+        return $response;
     }
 
     public function send(): void
     {
         echo $this->body;
+    }
+
+    private function setBody(string $content): void
+    {
+        $this->body = $content;
+    }
+
+    public function body(): string
+    {
+        return $this->body;
+    }
+
+    private function setHeader(string $name, string $value): void
+    {
+        $this->headers[$name] = $value;
+    }
+
+    public function header(?string $key): string|array|null
+    {
+        if ($key === null) {
+            return $this->headers;
+        }
+
+        return $this->headers[$key] ?? null;
     }
 }
