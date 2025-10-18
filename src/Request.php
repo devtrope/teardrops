@@ -33,4 +33,10 @@ class Request
 
         return $this->parameters[$key] ?? [];
     }
+
+    public function json(): array
+    {
+        $body = file_get_contents('php://input');
+        return json_decode($body, true) ?? [];
+    }
 }

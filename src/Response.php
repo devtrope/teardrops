@@ -4,7 +4,7 @@ namespace Teardrops\Teardrops;
 
 class Response
 {
-    private string $body;
+    private string $body = '';
     private array $headers = [];
 
     public static function render(string $viewName, array $data = []): self
@@ -58,5 +58,14 @@ class Response
         }
 
         return $this->headers[$key] ?? null;
+    }
+
+    public static function json(array $data): self
+    {
+        $response = new self();
+        $response->setBody(json_encode($data));
+        $response->setHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        return $response;
     }
 }
