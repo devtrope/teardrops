@@ -10,7 +10,7 @@ class Router
 
     public static function dispatch(Request $request): void
     {
-        $handler = self::match($request->getURI(), Route::getRoutes($request->getMethod()));
+        $handler = self::match($request->uri(), Route::list($request->method()));
         $controller = $handler[0] ?? null;
         $method = $handler[1] ?? null;
 
@@ -30,9 +30,7 @@ class Router
 
             foreach ($reflection->getParameters() as $parameter) {
                 if ($parameter->getType()) {
-                    /**
-                     * @var \ReflectionNamedType
-                     */
+                    /** @var \ReflectionNamedType */
                     $parameterType = $parameter->getType();
                     if ($parameterType->getName() === Request::class) {
                         $arguments[] = $request;
@@ -56,7 +54,7 @@ class Router
 
     private static function match(string $uri, array $routes): array
     {
-        // Search for an exact match
+        // Search for an exact match before continuing to more complex matching
         if (isset($routes[$uri])) {
             return $routes[$uri];
         }

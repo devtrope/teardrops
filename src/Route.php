@@ -21,7 +21,7 @@ class Route
         self::$routes[$method][$path] = $handler;
     }
 
-    public static function getRoutes(string $requestMethod): array
+    public static function list(string $requestMethod): array
     {
         if (! isset(self::$routes[$requestMethod])) {
             return [];
