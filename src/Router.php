@@ -25,7 +25,9 @@ class Router
                 throw new Exception("Method $method does not exist in controller $controller");
             }
 
-            call_user_func_array([$instance, $method], self::$parameters);
+            /** @var callable $callable */
+            $callable = [$instance, $method];
+            call_user_func_array($callable, self::$parameters);
         } else {
             http_response_code(404);
             echo '404 Not Found';

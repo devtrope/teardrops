@@ -4,7 +4,7 @@ namespace Teardrops\Teardrops;
 
 class Route
 {
-    protected static $routes = [];
+    protected static array $routes = [];
 
     public static function get(string $path , array $handler): void
     {
