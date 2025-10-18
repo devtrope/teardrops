@@ -6,8 +6,6 @@ class HomeController
 {
     public function index(): Response
     {
-        return Response::render('home', [
-            'message' => 'Welcome to Teardrops!'
-        ]);
+        return Response::render('home');
     }
 }
