@@ -16,13 +16,17 @@ class Response
         $filePath = __DIR__ . '/../templates/' . $viewName . '.php';
 
         if (! file_exists($filePath)) {
-            return new self('View not found');
+            throw new \Exception("View file $viewName does not exist");
         }
 
         ob_start();
         extract($data, EXTR_SKIP);
         include $filePath;
         $content = ob_get_clean();
+
+        if (! $content) {
+            $content = '';
+        }
 
         return new self($content);
     }

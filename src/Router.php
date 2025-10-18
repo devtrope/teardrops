@@ -51,6 +51,7 @@ class Router
                 return;
             }
 
+            /** @var string $response */
             echo $response;
             return;
         }
