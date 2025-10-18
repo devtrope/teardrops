@@ -4,8 +4,10 @@ namespace Teardrops\Teardrops;
 
 class HomeController
 {
-    public function index(): void
+    public function index(): Response
     {
-        echo 'Welcome to Teardrops!';
+        return Response::render('home', [
+            'message' => 'Welcome to Teardrops!'
+        ]);
     }
 }
