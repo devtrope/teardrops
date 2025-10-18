@@ -6,7 +6,7 @@ use Exception;
 
 class Router
 {
-    private static array $params = [];
+    private static array $parameters = [];
 
     public static function dispatch(string $uri, string $requestMethod): void
     {
@@ -18,14 +18,14 @@ class Router
             if (! class_exists($controller)) {
                 throw new Exception("Controller class $controller does not exist");
             }
-            
+
             $instance = new $controller();
 
             if (! method_exists($instance, $method)) {
                 throw new Exception("Method $method does not exist in controller $controller");
             }
 
-            call_user_func_array([$instance, $method], self::$params);
+            call_user_func_array([$instance, $method], self::$parameters);
         } else {
             http_response_code(404);
             echo '404 Not Found';
@@ -49,7 +49,7 @@ class Router
             }
 
             if (self::segmentsMatch($explodedRoute, $explodedUri)) {
-                self::extractParams($explodedRoute, $explodedUri);
+                self::extractParameters($explodedRoute, $explodedUri);
                 return $handler;
             }
         }
@@ -73,12 +73,12 @@ class Router
         return true;
     }
 
-    private static function extractParams(array $routeSegments, array $uriSegments): void
+    private static function extractParameters(array $routeSegments, array $uriSegments): void
     {
         foreach ($routeSegments as $index => $segment) {
             if (preg_match('/^{(\w+)}$/', $segment, $matches)) {
                 $paramName = $matches[1];
-                self::$params[$paramName] = $uriSegments[$index];
+                self::$parameters[$paramName] = $uriSegments[$index];
             }
         }
     }
