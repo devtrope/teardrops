@@ -8,11 +8,17 @@ class Route
 
     public static function get(string $path , callable $handler): void
     {
-        self::$routes['GET'][$path] = $handler;
+        self::assignRoute('GET', $path, $handler);
     }
+    
     public static function post(string $path , callable $handler): void
     {
-        self::$routes['POST'][$path] = $handler;
+        self::assignRoute('POST', $path, $handler);
+    }
+
+    private static function assignRoute(string $method, string $path, callable $handler): void
+    {
+        self::$routes[$method][$path] = $handler;
     }
 
     public static function getRoutes(string $requestMethod): array
