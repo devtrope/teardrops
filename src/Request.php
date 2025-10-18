@@ -34,9 +34,26 @@ class Request
         return $this->parameters[$key] ?? [];
     }
 
-    public function json(): array
+    public function json(?string $key): array|string|null
     {
         $body = file_get_contents('php://input');
-        return json_decode($body, true) ?? [];
+
+        if (! $body) {
+            return null;
+        }
+
+        $jsonData = json_decode($body, true);
+
+        if (! $jsonData) {
+            return null;
+        }
+
+        if ($key === null) {
+            /** @var array $jsonData */
+            return $jsonData;
+        }
+
+        /** @var array $jsonData */
+        return $jsonData[$key];
     }
 }

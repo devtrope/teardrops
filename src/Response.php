@@ -63,7 +63,14 @@ class Response
     public static function json(array $data): self
     {
         $response = new self();
-        $response->setBody(json_encode($data));
+
+        $jsonData = json_encode($data);
+
+        if (! $jsonData) {
+            throw new \Exception('Failed to encode data to JSON');
+        }
+
+        $response->setBody($jsonData);
         $response->setHeader('Content-Type', 'application/json; charset=UTF-8');
 
         return $response;
