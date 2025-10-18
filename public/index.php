@@ -9,6 +9,10 @@ Route::get('/', function () {
     echo 'Home Page';
 });
 
+Route::post('/', function () {
+    echo 'Home Page from post';
+});
+
 Route::get('/blog', function () {
     echo 'Blog Page';
 });
@@ -22,4 +26,4 @@ Route::get('/blog/all', function () {
 });
 
 $calledURI = rtrim($_SERVER['REQUEST_URI'], '/') ?? '/';
-Router::dispatch($calledURI);
+Router::dispatch($calledURI, $_SERVER['REQUEST_METHOD']);

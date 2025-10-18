@@ -6,9 +6,9 @@ class Router
 {
     private static array $params = [];
 
-    public static function dispatch(string $uri): void
+    public static function dispatch(string $uri, string $requestMethod): void
     {
-        $handler = self::match($uri, Route::getRoutes());
+        $handler = self::match($uri, Route::getRoutes($requestMethod));
 
         if ($handler) {
             call_user_func_array($handler, self::$params);
