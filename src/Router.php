@@ -29,9 +29,15 @@ class Router
             $arguments = [];
 
             foreach ($reflection->getParameters() as $parameter) {
-                if ($parameter->getType()?->getName() === Request::class) {
-                    $arguments[] = $request;
-                    continue;
+                if ($parameter->getType()) {
+                    /**
+                     * @var \ReflectionNamedType
+                     */
+                    $parameterType = $parameter->getType();
+                    if ($parameterType->getName() === Request::class) {
+                        $arguments[] = $request;
+                        continue;
+                    }
                 }
 
                 $arguments[] = self::$parameters[$parameter->getName()] ?? null;
