@@ -2,6 +2,8 @@
 
 namespace Teardrops\Teardrops;
 
+use Exception;
+
 class Router
 {
     private static array $params = [];
@@ -13,7 +15,16 @@ class Router
         $method = $handler[1] ?? null;
 
         if ($controller && $method) {
+            if (! class_exists($controller)) {
+                throw new Exception("Controller class $controller does not exist");
+            }
+            
             $instance = new $controller();
+
+            if (! method_exists($instance, $method)) {
+                throw new Exception("Method $method does not exist in controller $controller");
+            }
+
             call_user_func_array([$instance, $method], self::$params);
         } else {
             http_response_code(404);
