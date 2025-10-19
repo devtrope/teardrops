@@ -95,12 +95,14 @@ class Request
                 foreach ($rules as $rule) {
                     if ($rule === 'required' && (is_null($value) || $value === '')) {
                         $errors[$key] = 'This field is required.';
+                        continue 2;
                     }
 
                     if (str_starts_with($rule, 'min:')) {
                         $minLength = (int) substr($rule, 4);
                         if (strlen($value) < $minLength) {
                             $errors[$key] = "This field must be at least $minLength characters long.";
+                            continue 2;
                         }
                     }
 
@@ -108,6 +110,7 @@ class Request
                         $maxLength = (int) substr($rule, 4);
                         if (strlen($value) > $maxLength) {
                             $errors[$key] = "This field must be lower than $maxLength characters long.";
+                            continue 2;
                         }
                     }
                 }
@@ -116,7 +119,7 @@ class Request
         
         if (! empty($errors)) {
             Response::redirect($this->referer)->withErrors($errors)->send();
-            return;
+            exit;
         }
 
         return;
