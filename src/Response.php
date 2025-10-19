@@ -52,6 +52,13 @@ class Response
         return $this;
     }
 
+    public function withErrors(array $errors): self
+    {
+        $_SESSION['errors'] = $errors;
+
+        return $this;
+    }
+
     public function send(): void
     {
         foreach ($this->headers as $name => $value) {

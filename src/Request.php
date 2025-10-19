@@ -7,6 +7,7 @@ class Request
     private string $uri;
     private string $method;
     private array $parameters = [];
+    private string $referer;
 
     public function __construct()
     {
@@ -17,6 +18,8 @@ class Request
         if ($this->method === 'POST') {
             $_SESSION['old'] = $this->parameters;
         }
+
+        $this->referer = $_SERVER['HTTP_REFERER'] ?? '';
     }
 
     public function uri(): string
@@ -81,18 +84,27 @@ class Request
         return $jsonData[$key];
     }
 
-    public function validate(): bool
+    public function validate(array $validationRules): void
     {
+        $errors = [];
+        
         foreach ($this->parameters as $key => $value) {
-            if (is_string($value) && trim($value) === '') {
-                return false;
-            }
+            if (isset($validationRules[$key])) {
+                $rules = explode('|', $validationRules[$key]);
 
-            if (is_array($value) && empty($value)) {
-                return false;
+                foreach ($rules as $rule) {
+                    if ($rule === 'required' && (is_null($value) || $value === '')) {
+                        $errors[$key] = 'Le champ ' . $key . ' est requis.';
+                    }
+                }
             }
         }
+        
+        if (! empty($errors)) {
+            Response::redirect($this->referer)->withErrors($errors)->send();
+            return;
+        }
 
-        return true;
+        return;
     }
 }
