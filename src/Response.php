@@ -31,8 +31,22 @@ class Response
         return $response;
     }
 
+    public static function redirect(string $url): self
+    {
+        $response = new self();
+        $response->setHeader('Location', $url);
+        $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
+        $response->setBody('');
+        http_response_code(302);
+        return $response;
+    }
+
     public function send(): void
     {
+        foreach ($this->headers as $name => $value) {
+            header("$name: $value");
+        }
+        
         echo $this->body;
     }
 
