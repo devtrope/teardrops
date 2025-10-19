@@ -38,7 +38,18 @@ class Response
         $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
         $response->setBody('');
         http_response_code(302);
+
         return $response;
+    }
+
+    public function withFlash(string $type, string $message): self
+    {
+        $_SESSION['flash'] = [
+            'type' => $type,
+            'message' => $message,
+        ];
+
+        return $this;
     }
 
     public function send(): void
@@ -46,7 +57,7 @@ class Response
         foreach ($this->headers as $name => $value) {
             header("$name: $value");
         }
-        
+
         echo $this->body;
     }
 
