@@ -80,4 +80,19 @@ class Request
         /** @var array $jsonData */
         return $jsonData[$key];
     }
+
+    public function validate(): bool
+    {
+        foreach ($this->parameters as $key => $value) {
+            if (is_string($value) && trim($value) === '') {
+                return false;
+            }
+
+            if (is_array($value) && empty($value)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
