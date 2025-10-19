@@ -23,3 +23,8 @@ function error(string $field): ?string
 
     return $error;
 }
+
+function hasError(string $field): bool
+{
+    return isset($_SESSION['errors'][$field]);
+}

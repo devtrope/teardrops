@@ -8,13 +8,17 @@ class Request
     private string $method;
     private array $parameters = [];
     private string $referer;
+    private string $body;
+    private array $headers;
 
     public function __construct()
     {
         $this->uri = strval($_SERVER['REQUEST_URI']);
         $this->method = strval($_SERVER['REQUEST_METHOD']);
         $this->parameters = $_REQUEST;
-        $this->referer = $_SERVER['HTTP_REFERER'] ?? '';
+        $this->referer = strval($_SERVER['HTTP_REFERER']);
+        $this->body = file_get_contents('php://input') ?: '';
+        $this->headers = getallheaders() ?: [];
     }
 
     public function uri(): string
@@ -36,19 +40,9 @@ class Request
         return $this->parameters[$key] ?? [];
     }
 
-    public function json(?string $key): array|string|null
+    public function json(?string $key = null): array|string|null
     {
-        $body = file_get_contents('php://input');
-
-        if (! $body) {
-            return null;
-        }
-
-        $jsonData = json_decode($body, true);
-
-        if (! $jsonData) {
-            return null;
-        }
+        $jsonData = json_decode($this->body, true);
 
         if ($key === null) {
             /** @var array $jsonData */
@@ -62,8 +56,15 @@ class Request
     public function validate(array $validationRules): void
     {
         $errors = [];
+
+        $parameters = $this->parameters;
+
+        if (isset($this->headers['Content-Type']) && $this->headers['Content-Type'] === 'application/json') {
+            /** @var array $parameters */
+            $parameters = $this->json();
+        }
         
-        foreach ($this->parameters as $key => $value) {
+        foreach ($parameters as $key => $value) {
             if (isset($validationRules[$key])) {
                 $rules = explode('|', $validationRules[$key]);
 
@@ -93,6 +94,11 @@ class Request
         }
         
         if (! empty($errors)) {
+            if (isset($this->headers['Content_Type']) && $this->headers['Content-Type'] === 'application/json') {
+                Response::json(['errors' => $errors])->send();
+                exit;
+            }
+
             Response::redirect($this->referer)
                 ->withErrors($errors)
                 ->withOldData($this->parameters)

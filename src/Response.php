@@ -59,6 +59,13 @@ class Response
         return $this;
     }
 
+    public function withOldData(array $oldData): self
+    {
+        $_SESSION['old'] = $oldData;
+
+        return $this;
+    }
+
     public function send(): void
     {
         foreach ($this->headers as $name => $value) {
