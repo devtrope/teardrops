@@ -1,5 +1,16 @@
 <?php
 
+function old(string $field): ?string
+{
+    if (! isset($_SESSION['old'][$field])) {
+        return null;
+    }
+
+    $old = $_SESSION['old'][$field];
+    unset($_SESSION['old'][$field]);
+
+    return $old;
+}
 
 function error(string $field): ?string
 {

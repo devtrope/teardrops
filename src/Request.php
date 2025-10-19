@@ -14,11 +14,6 @@ class Request
         $this->uri = strval($_SERVER['REQUEST_URI']);
         $this->method = strval($_SERVER['REQUEST_METHOD']);
         $this->parameters = $_REQUEST;
-
-        if ($this->method === 'POST') {
-            $_SESSION['old'] = $this->parameters;
-        }
-
         $this->referer = $_SERVER['HTTP_REFERER'] ?? '';
     }
 
@@ -39,26 +34,6 @@ class Request
         }
 
         return $this->parameters[$key] ?? [];
-    }
-
-    public function old(?string $key): array|string|null
-    {
-        if (! isset($_SESSION['old'])) {
-            return null;
-        }
-
-        /** @var array $_SESSION['old'] */
-        $oldData = $_SESSION['old'];
-
-        if ($key === null) {
-            unset($_SESSION['old']);
-            return $oldData;
-        }
-
-        $oldValue = $_SESSION['old'][$key] ?? null;
-        unset($_SESSION['old'][$key]);
-
-        return $oldValue;
     }
 
     public function json(?string $key): array|string|null
@@ -118,7 +93,10 @@ class Request
         }
         
         if (! empty($errors)) {
-            Response::redirect($this->referer)->withErrors($errors)->send();
+            Response::redirect($this->referer)
+                ->withErrors($errors)
+                ->withOldData($this->parameters)
+                ->send();
             exit;
         }
 
