@@ -7,7 +7,7 @@ class Request
     private string $uri;
     private string $method;
     private array $parameters = [];
-    private string $referer;
+    private ?string $referer = null;
     private string $body;
     private array $headers;
 
@@ -16,7 +16,11 @@ class Request
         $this->uri = strval($_SERVER['REQUEST_URI']);
         $this->method = strval($_SERVER['REQUEST_METHOD']);
         $this->parameters = $_REQUEST;
-        $this->referer = strval($_SERVER['HTTP_REFERER']);
+        
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $this->referer = strval($_SERVER['HTTP_REFERER']);
+        }
+
         $this->body = file_get_contents('php://input') ?: '';
         $this->headers = getallheaders() ?: [];
     }
