@@ -16,7 +16,7 @@ class Request
         $this->uri = strval($_SERVER['REQUEST_URI']);
         $this->method = strval($_SERVER['REQUEST_METHOD']);
         $this->parameters = $_REQUEST;
-        
+
         if (isset($_SERVER['HTTP_REFERER'])) {
             $this->referer = strval($_SERVER['HTTP_REFERER']);
         }
@@ -98,7 +98,7 @@ class Request
         }
         
         if (! empty($errors)) {
-            if (isset($this->headers['Content_Type']) && $this->headers['Content-Type'] === 'application/json') {
+            if (isset($this->headers['Content-Type']) && $this->headers['Content-Type'] === 'application/json') {
                 Response::json(['errors' => $errors])->send();
                 exit;
             }
