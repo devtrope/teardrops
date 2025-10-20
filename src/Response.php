@@ -6,6 +6,7 @@ class Response
 {
     private string $body = '';
     private array $headers = [];
+    private bool $sent = false;
 
     public static function render(string $viewName, array $data = []): self
     {
@@ -68,11 +69,16 @@ class Response
 
     public function send(): void
     {
+        if ($this->sent) {
+            throw new \Exception('Response has already been sent');
+        }
+
         foreach ($this->headers as $name => $value) {
             header("$name: $value");
         }
 
         echo $this->body;
+        $this->sent = true;
     }
 
     private function setBody(string $content): void
