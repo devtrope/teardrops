@@ -32,8 +32,12 @@ class Response
         return $response;
     }
 
-    public static function redirect(string $url): self
+    public static function redirect(?string $url): self
     {
+        if ($url === null) {
+            throw new \Exception('URL for redirection cannot be null');
+        }
+
         $response = new self();
         $response->setHeader('Location', $url);
         $response->setHeader('Content-Type', 'text/html; charset=UTF-8');
