@@ -9,7 +9,7 @@ class Request
     private array $parameters = [];
     private ?string $referer = null;
     private string $body;
-    private array $headers;
+    private array $headers = [];
     private bool $isJson = false;
 
     public function __construct()
@@ -23,10 +23,13 @@ class Request
         }
 
         $this->body = file_get_contents('php://input') ?: '';
-        $this->headers = getallheaders() ?: [];
 
-        if (isset($this->headers['Content-Type']) && $this->headers['Content-Type'] === 'application/json') {
-            $this->isJson = true;
+        if (function_exists('getallheaders')) {
+            $this->headers = getallheaders() ?: [];
+            
+            if (isset($this->headers['Content-Type']) && $this->headers['Content-Type'] === 'application/json') {
+                $this->isJson = true;
+            }
         }
     }
 

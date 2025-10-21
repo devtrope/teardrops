@@ -6,6 +6,7 @@ function old(string $field): ?string
         return null;
     }
 
+    /** @var string */
     $old = $_SESSION['old'][$field];
     unset($_SESSION['old'][$field]);
 
@@ -18,6 +19,7 @@ function error(string $field): ?string
         return null;
     }
 
+    /** @var string */
     $error = $_SESSION['errors'][$field];
     unset($_SESSION['errors'][$field]);
 
