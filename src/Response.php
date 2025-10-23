@@ -85,7 +85,7 @@ class Response
         $this->sent = true;
     }
 
-    private function setBody(string $content): void
+    public function setBody(string $content): void
     {
         $this->body = $content;
     }
@@ -95,7 +95,7 @@ class Response
         return $this->body;
     }
 
-    private function setHeader(string $name, string $value): void
+    public function setHeader(string $name, string $value): void
     {
         $this->headers[$name] = $value;
     }
