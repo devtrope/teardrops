@@ -1,6 +1,6 @@
 <?php
 
-namespace Teardrops\Teardrops;
+namespace Teardrops\Teardrops\Http\Controller;
 
 use Ludens\Http\Response;
 

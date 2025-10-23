@@ -12,6 +12,6 @@ use Ludens\Http\Request;
 use Ludens\Routing\Route;
 use Ludens\Routing\Router;
 
-Route::get('/', [\Teardrops\Teardrops\HomeController::class, 'index']);
+Route::get('/', [\Teardrops\Teardrops\Http\Controller\HomeController::class, 'index']);
 
 Router::dispatch(new Request());
