@@ -1,8 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Teardrops\Teardrops\Request;
+use Ludens\Http\Request;
 use PHPUnit\Framework\Attributes\CoversMethod;
+
+define('TEMPLATES_PATH', dirname(__DIR__) . '/templates');
 
 #[CoversMethod(Request::class, 'clean')]
 final class RequestTest extends TestCase

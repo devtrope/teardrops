@@ -6,10 +6,11 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/helpers.php';
+require __DIR__ . '/bootstrap.php';
 
-use Teardrops\Teardrops\Request;
-use Teardrops\Teardrops\Route;
-use Teardrops\Teardrops\Router;
+use Ludens\Http\Request;
+use Ludens\Routing\Route;
+use Ludens\Routing\Router;
 
 Route::get('/', [\Teardrops\Teardrops\HomeController::class, 'index']);
 

@@ -1,8 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Teardrops\Teardrops\Response;
+use Ludens\Http\Response;
 use PHPUnit\Framework\Attributes\CoversMethod;
+
+define('TEMPLATES_PATH', __DIR__ . '/templates');
 
 #[CoversMethod(Response::class, 'clean')]
 final class ResponseTest extends TestCase
