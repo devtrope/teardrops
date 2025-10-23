@@ -43,16 +43,20 @@ class Request
         return $this->method;
     }
 
-    public function parameter(?string $key): array|string|null
+    public function parameter(?string $key): array|string
     {
         if ($key === null) {
             return $this->parameters;
         }
 
-        return $this->parameters[$key] ?? [];
+        if (! isset($this->parameters[$key])) {
+            throw new \InvalidArgumentException("Parameter $key does not exist in the request.");
+        }
+
+        return $this->parameters[$key];
     }
 
-    public function json(?string $key = null): array|string|null
+    public function json(?string $key = null): array|string
     {
         $jsonData = json_decode($this->body, true);
 
@@ -61,8 +65,17 @@ class Request
             return $jsonData;
         }
 
+        if (! isset($jsonData[$key])) {
+            throw new \InvalidArgumentException("JSON key $key does not exist in the request body.");
+        }
+
         /** @var array $jsonData */
         return $jsonData[$key];
+    }
+
+    public function setBody(string $body): void
+    {
+        $this->body = $body;
     }
 
     public function validate(array $validationRules): void
