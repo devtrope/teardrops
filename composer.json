@@ -1,9 +1,9 @@
 {
-    "name": "teardrops/teardrops",
+    "name": "devtrope/teardrops",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Teardrops\\Teardrops\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [
@@ -17,7 +17,7 @@
         "phpunit/phpunit": "^11.5"
     },
     "require": {
-        "ludens/ludens": "dev-main"
+        "devtrope/ludens": "*"
     },
     "repositories": [
         {

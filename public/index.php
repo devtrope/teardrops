@@ -8,4 +8,4 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/helpers.php';
 require __DIR__ . '/bootstrap.php';
 
-Teardrops\Teardrops\Kernel::init(new Ludens\Http\Request());
+App\Kernel::init(new Ludens\Http\Request());
