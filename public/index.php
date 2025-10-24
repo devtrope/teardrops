@@ -18,4 +18,8 @@ $dotenv->load();
 require __DIR__ . '/../src/helpers.php';
 require __DIR__ . '/bootstrap.php';
 
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
+
 \Ludens\Core\Application::init(new Ludens\Http\Request());
