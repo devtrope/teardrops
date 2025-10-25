@@ -2,4 +2,4 @@
 
 use Ludens\Routing\Route;
 
-Route::get('/', [\App\Http\Controller\HomeController::class, 'index']);
+Route::call([\App\Http\Controller\HomeController::class, 'index'])->when('/')->onGet();

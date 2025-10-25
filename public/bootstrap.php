@@ -11,6 +11,10 @@ if (! file_exists($environmentFile)) {
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
+$whoops = new \Whoops\Run;
+$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+$whoops->register();
+
 if ($_ENV['APP_ENVIRONMENT'] !== 'production') {
     if (! file_exists(ROUTES_PATH)) {
         throw new \Exception('Routes file not found at ' . ROUTES_PATH);
@@ -18,7 +22,3 @@ if ($_ENV['APP_ENVIRONMENT'] !== 'production') {
     
     require ROUTES_PATH;
 }
-
-$whoops = new \Whoops\Run;
-$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-$whoops->register();
