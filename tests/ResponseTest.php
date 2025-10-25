@@ -5,8 +5,6 @@ namespace Tests;
 use Ludens\Http\Response;
 use PHPUnit\Framework\Attributes\CoversMethod;
 
-define('TEMPLATES_PATH', __DIR__ . '/templates');
-
 #[CoversMethod(Response::class, 'clean')]
 final class ResponseTest extends BaseTestCase
 {
