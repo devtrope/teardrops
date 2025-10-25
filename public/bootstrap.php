@@ -1,8 +1,6 @@
 <?php
 
-define ('TEMPLATES_PATH', dirname(__DIR__) . '/templates');
 define ('ROUTES_PATH', dirname(__DIR__) . '/web/routes.php');
-define ('CACHE_PATH', dirname(__DIR__) . '/web/cache');
 
 $environmentFile = __DIR__ . '/../.env';
 
