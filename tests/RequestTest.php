@@ -1,13 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace Tests;
+
 use Ludens\Http\Request;
 use PHPUnit\Framework\Attributes\CoversMethod;
 
-define('TEMPLATES_PATH', dirname(__DIR__) . '/templates');
-
 #[CoversMethod(Request::class, 'clean')]
-final class RequestTest extends TestCase
+final class RequestTest extends BaseTestCase
 {
     public function testItCanRetrieveParameter(): void
     {

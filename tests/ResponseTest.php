@@ -1,25 +1,15 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace Tests;
+
 use Ludens\Http\Response;
 use PHPUnit\Framework\Attributes\CoversMethod;
 
 define('TEMPLATES_PATH', __DIR__ . '/templates');
 
 #[CoversMethod(Response::class, 'clean')]
-final class ResponseTest extends TestCase
+final class ResponseTest extends BaseTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        (new \Ludens\Core\Application())->withPaths(
-            templates: dirname(__DIR__) . '/templates',
-            routes: dirname(__DIR__) . '/web/routes.php',
-            cache: dirname(__DIR__) . '/web/cache'
-        );
-    }
-
     public function testItCanRedirect(): void
     {
         $response = Response::redirect('https://example.com');
