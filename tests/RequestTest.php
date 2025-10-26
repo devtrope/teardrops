@@ -224,6 +224,23 @@ final class RequestTest extends BaseTestCase
         $this->assertSame('/search?q=hello%20world', $request->uri());
     }
 
+    public function testItHandlesArrayParameters(): void
+    {
+        $_GET = ['tags' => ['php', 'laravel', 'testing']];
+        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+
+        $request = Request::capture();
+
+        /**
+         * @var mixed
+         */
+        $tags = $request->get('tags');
+        $this->assertIsArray($tags);
+        $this->assertCount(3, $tags);
+        $this->assertContains('php', $tags);
+    }
+
     public function testItHandlesNestedArrayParameters(): void
     {
         $_POST = [
