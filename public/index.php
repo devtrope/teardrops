@@ -14,4 +14,4 @@ require __DIR__ . '/bootstrap.php';
         routes: dirname(__DIR__) . '/web/routes.php',
         cache: dirname(__DIR__) . '/web/cache'
     )
-    ->init(new Ludens\Http\Request());
+    ->init(\Ludens\Http\Request::capture());
