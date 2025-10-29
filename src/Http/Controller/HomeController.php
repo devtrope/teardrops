@@ -8,6 +8,6 @@ class HomeController
 {
     public function index(): Response
     {
-        return Response::render('home');
+        return Response::view('home');
     }
 }
