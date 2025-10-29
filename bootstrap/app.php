@@ -42,7 +42,6 @@ $app->loadConfiguration();
 
 $app->configureExceptionHandling();
 
-
 /*
 |--------------------------------------------------------------------------
 | Register Routes
