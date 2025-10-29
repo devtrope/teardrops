@@ -3,7 +3,7 @@
 namespace App\Http\Controller;
 
 use Ludens\Http\Response;
-use Ludens\Http\Controller\AbstractController;
+use Ludens\Framework\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
