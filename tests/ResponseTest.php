@@ -45,9 +45,8 @@ final class ResponseTest extends BaseTestCase
         $response = new Response();
         $response->withFlash('success', 'Operation completed successfully.');
 
-        $this->assertArrayHasKey('flash', $_SESSION);
-        $this->assertSame('success', $_SESSION['flash']['type']);
-        $this->assertSame('Operation completed successfully.', $_SESSION['flash']['message']);
+        $this->assertArrayHasKey('success', $_SESSION);
+        $this->assertSame('Operation completed successfully.', $_SESSION['success']);
     }
 
     public function testItCanSetErrors(): void
@@ -91,7 +90,7 @@ final class ResponseTest extends BaseTestCase
 
     public function testItCanRenderTemplate(): void
     {
-        $response = Response::render('fixtures/sample_template', ['name' => 'John']);
+        $response = Response::view('fixtures/sample_template', ['name' => 'John']);
         
         ob_start();
         $response->send();
@@ -106,6 +105,6 @@ final class ResponseTest extends BaseTestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('View file non_existent_template.php does not exist');
 
-        Response::render('non_existent_template.php', []);
+        Response::view('non_existent_template.php', []);
     }
 }
