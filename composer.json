@@ -22,7 +22,8 @@
         "phpunit/phpunit": "^11.5"
     },
     "require": {
-        "devtrope/ludens": "*"
+        "devtrope/ludens": "*",
+        "twig/twig": "^3.21"
     },
     "repositories": [
         {
