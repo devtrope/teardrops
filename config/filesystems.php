@@ -2,6 +2,6 @@
 
 return [
     'images' => [
-        'root' => '\\assets\\images\\',
+        'root' => '\\uploads\\images\\',
     ]
 ];
