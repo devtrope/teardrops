@@ -1,17 +1,35 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Start Session
+|--------------------------------------------------------------------------
+*/
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../src/helpers.php';
-require __DIR__ . '/bootstrap.php';
+/*
+|--------------------------------------------------------------------------
+| Register The Auto Loader
+|--------------------------------------------------------------------------
+*/
 
-(new \Ludens\Core\Application())
-    ->withPaths(
-        templates: dirname(__DIR__) . '/templates',
-        routes: dirname(__DIR__) . '/web/routes.php',
-        cache: dirname(__DIR__) . '/web/cache'
-    )
-    ->init(\Ludens\Http\Request::capture());
+require __DIR__ . '/../vendor/autoload.php';
+
+/*
+|--------------------------------------------------------------------------
+| Bootstrap The Application
+|--------------------------------------------------------------------------
+*/
+
+$app = require_once __DIR__ . '/../bootstrap/app.php';
+
+/*
+|--------------------------------------------------------------------------
+| Run The Application
+|--------------------------------------------------------------------------
+*/
+
+$app->init(\Ludens\Http\Request::capture());
