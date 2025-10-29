@@ -3,11 +3,12 @@
 namespace App\Http\Controller;
 
 use Ludens\Http\Response;
+use Ludens\Http\Controller\AbstractController;
 
-class HomeController
+class HomeController extends AbstractController
 {
     public function index(): Response
     {
-        return Response::view('home');
+        return $this->render('home');
     }
 }
