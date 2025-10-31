@@ -14,7 +14,7 @@ return [
     | Recommended: false in development, true in production
     |
     */
-    'cache' => $_ENV['TWIG_CACHE'],
+    'cache' => (bool) $_ENV['TWIG_CACHE'],
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     | Recommended: true in development, false in production
     |
     */
-    'debug' => $_ENV['APP_DEBUG'],
+    'debug' => (bool) $_ENV['APP_DEBUG'],
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     | Recommended: true in development, false in production
     |
     */
-    'auto_reload' => $_ENV['TWIG_AUTO_RELOAD'],
+    'auto_reload' => (bool) $_ENV['TWIG_AUTO_RELOAD'],
     
     /*
     |--------------------------------------------------------------------------
@@ -56,6 +56,6 @@ return [
     | Recommended: true in development, false in production
     |
     */
-    'strict_variables' => $_ENV['TWIG_STRICT_VARIABLES'],
+    'strict_variables' => (bool) $_ENV['TWIG_STRICT_VARIABLES'],
 
 ];
