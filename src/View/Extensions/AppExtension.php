@@ -8,9 +8,9 @@ use Twig\TwigFilter;
 
 /**
  * Custom Twig extension for application-specific functions and filters.
- * 
+ *
  * Add your own Twig functions and filters here.
- * 
+ *
  * @see https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
  */
 class AppExtension extends AbstractExtension
