@@ -37,4 +37,5 @@ return [
     'files' => [
         'root' => '/uploads/files/',
     ],
+    
 ];
