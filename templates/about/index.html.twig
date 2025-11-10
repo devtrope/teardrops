@@ -1,0 +1,50 @@
+{% extends "layouts/_base.html.twig" %}
+
+{% block title %}{{ config('app.name') }} - About{% endblock %}
+
+{% block content %}
+    <div class="about">
+        <h1>About Aura</h1>
+        <h2>We believe in the power of simplicity and the beauty of intentional design.</h2>
+        <div class="about-block">
+            <h3>Our Story</h3>
+            <p>Founded in 2024, Aura was born from a desire to bring thoughtfully designed, timeless pieces to modern homes.
+            We curate each item in our collection with care, seeking out artisans and makers who share our commitment to quality and sustainability.</p>
+            <p>Every product tells a story—from the hands that crafted it to the materials chosen for their beauty and longevity.
+            We believe in buying less but buying better, investing in pieces that bring joy and function to your everyday life.</p>
+        </div>
+        <div class="about-block">
+            <h3>Our Values</h3>
+            <div class="about-block__grid">
+                <div class="about-block__grid__element">
+                    <h4>Quality First</h4>
+                    <div class="element-text">
+                        We partner with skilled artisans and trusted manufacturers who share our commitment to exceptional craftsmanship.
+                    </div>
+                </div>
+                <div class="about-block__grid__element">
+                    <h4>Sustainable Practices</h4>
+                    <div class="element-text">
+                        From sourcing to shipping, we prioritize environmentally conscious choices and ethical production methods.
+                    </div>
+                </div>
+                <div class="about-block__grid__element">
+                    <h4>Timeless Design</h4>
+                    <div class="element-text">
+                        We select pieces that transcend trends, designed to be loved and used for years to come.
+                    </div>
+                </div>
+                <div class="about-block__grid__element">
+                    <h4>Customer Care</h4>
+                    <div class="element-text">
+                        Your satisfaction is our priority. We're here to help you find the perfect pieces for your space.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-block">
+            <h3>Join Our Community</h3>
+            <p>Follow us on social media to see how our customers style their Aura pieces, get styling tips, and be the first to know about new arrivals and exclusive offers.</p>
+        </div>
+    </div>
+{% endblock %}
