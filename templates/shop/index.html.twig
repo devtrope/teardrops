@@ -1,0 +1,69 @@
+{% extends "layouts/_base.html.twig" %}
+
+{% block title %}{{ config('app.name') }} - Shop Page{% endblock %}
+
+{% block content %}
+    <div class="collection">
+        <div class="collection__content">
+            <div class="collection__content__header">
+                <h1>Shop All</h1>
+                <p>Browse our carefully curated collection of home essentials and decor.</p>
+                <div class="filters">
+                    <select name="category" id="category">
+                        <option value="" selected>All Categories</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="order" id="order">
+                        <option value="" selected>Featured</option>
+                        <option value="1">Price: Low to High</option>
+                        <option value="2">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+            <div class="products">
+
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch ('/products', {
+                method: 'POST'
+            })
+            .then(data => data.text())
+            .then(content => document.querySelector('.products').innerHTML = content)
+        })
+
+        document.getElementById('category').addEventListener('change', e => {
+            fetch ('/products', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    category: e.target.value,
+                    order: document.getElementById('order').value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(data => data.text())
+            .then(content => document.querySelector('.products').innerHTML = content)
+        })
+
+        document.getElementById('order').addEventListener('change', e => {
+            fetch ('/products', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    category: document.getElementById('category').value,
+                    order: e.target.value
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(data => data.text())
+            .then(content => document.querySelector('.products').innerHTML = content)
+        })
+    </script>
+{% endblock %}

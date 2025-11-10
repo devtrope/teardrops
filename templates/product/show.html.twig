@@ -1,0 +1,43 @@
+{% extends "layouts/_base.html.twig" %}
+
+{% block title %}{{ config('app.name') }} - Product Page{% endblock %}
+
+{% block content %}
+    <div class="product-page">
+        <div class="product-page__content">
+            <a href="/shop" class="btn btn-no-border">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Back to Shop
+            </a>
+            <div class="product-grid">
+                <div class="product-page__picture">
+                    <img src="{{ image(product.picture) }}" alt="">
+                </div>
+                <div class="product-page__informations">
+                    <div class="product-page__informations__title">{{ product.name }}</div>
+                    <div class="product-page__informations__price">${{ product.price|formatPrice }}</div>
+                    <div class="product-page__informations__description">
+                        Handcrafted ceramic vase with organic form and natural glaze. Perfect for dried florals or as a standalone statement piece.
+                        Each vase is unique with subtle variations in color and texture.
+                    </div>
+                    <div class="product-page__informations__details">
+                        <div class="title">Product Details</div>
+                        {% if product.details|length > 0 %}
+                            <ul>
+                                {% for detail in product.details %}
+                                    <li>{{ detail.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="no-details">No product details provided.</p>
+                        {% endif %}
+                    </div>
+                    <button class="btn btn-primary">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

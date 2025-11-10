@@ -1,0 +1,18 @@
+{% for product in products %}
+    <div class="product__card">
+        <a href="/products/{{ product.id }}">
+            <div class="product__card__image">
+                <img src="{{ image(product.picture) }}" alt="{{ product.name }}">
+            </div>
+        </a>
+        <div class="product__card__body">
+            <a href="/products/{{ product.id }}">
+                <div class="product__card__body__title">{{ product.name }}</div>
+            </a>
+            <div class="product__card__body__footer">
+                <div class="product__card__body__footer__price">${{ product.price|formatPrice }}</div>
+                <button class="btn btn-primary">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+{% endfor %}

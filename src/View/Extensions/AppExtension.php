@@ -31,9 +31,14 @@ class AppExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            // new TwigFilter('excerpt', [$this, 'excerpt']),
+            new TwigFilter('formatPrice', [$this, 'formatPrice']),
         ];
     }
 
     // Add your custom methods here
+    public function formatPrice(int $price)
+    {
+        $price = $price / 100;
+        return number_format($price, 2);
+    }
 }

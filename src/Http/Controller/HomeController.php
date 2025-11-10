@@ -3,12 +3,15 @@
 namespace App\Http\Controller;
 
 use Ludens\Http\Response;
+use App\Http\Model\Product;
+use Ludens\Database\ModelManager;
 use Ludens\Framework\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    public function index(): Response
+    public function index(ModelManager $modelManager): Response
     {
-        return $this->render('home');
+        $products = $modelManager->get(Product::class)::query()->limit(4)->get();
+        return $this->render('home', ['products' => $products]);
     }
 }

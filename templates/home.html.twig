@@ -3,12 +3,68 @@
 {% block title %}{{ config('app.name') }} - Home Page{% endblock %}
 
 {% block content %}
-    <div class="absolute w-100 h-100 rounded-full blur-3xl z-[-1] animate-color"></div>
-    <div class="max-w-3xl w-full text-center space-y-8">
-        <img src="{{ asset('images/logo.png') }}" class="w-32 h-32 object-contain mx-auto" />
-        <h1 class="text-5xl font-bold tracking-tight text-slate-800">Welcome to <span class="text-emerald-500">Teardrops</span></h1>
-        <p class="text-lg">
-            Your application is ready to go! Teardrops is a lightweight PHP framework designed for simplicity and performance.
-        </p>
+    <div class="hero">
+        <img src="{{ asset('images/hero.jpg') }}" alt="Hero Header Image">
+        <div class="hero-background">
+            <div class="hero-background__content">
+                <div class="hero-background__content__text">
+                    <h1>
+                        Timeless Design<br/>
+                        <span class="green">Modern Living</span>
+                    </h1>
+                    <h2>
+                        Discover curated collections that bring simplicity and elegance to your everyday life.
+                    </h2>
+                    <div class="ctas">
+                        <a href="/shop" class="btn btn-primary">Shop Now <span class="material-symbols-outlined">arrow_forward</span></a>
+                        <a href="/about" class="btn btn-secondary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="collection">
+        <div class="collection__content">
+            <div class="collection__content__header center">
+                <h2>Featured Collection</h2>
+                <p>Handpicked pieces that embody our commitment to quality and timeless design.</p>
+            </div>
+            <div class="products">
+                
+            </div>
+            <div class="load-more-container">
+                <button class="btn btn-secondary" id="load-more">Load More Products</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch ('/products', {
+                method: 'POST',
+                body: JSON.stringify({ limit: 4 }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(data => data.text())
+            .then(content => document.querySelector('.products').innerHTML = content)
+        })
+
+        document.getElementById('load-more').addEventListener('click', () => {
+            let offset = document.querySelectorAll('.product__card').length
+
+             fetch ('/products', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    limit: 4,
+                    offset: offset
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(data => data.text())
+            .then(content => document.querySelector('.products').insertAdjacentHTML('beforeend', content))
+        })
+    </script>
 {% endblock %}
