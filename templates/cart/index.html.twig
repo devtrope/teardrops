@@ -1,0 +1,90 @@
+{% extends "layouts/_base.html.twig" %}
+
+{% block title %}{{ config('app.name') }} - Cart{% endblock %}
+
+{% block content %}
+    <div class="cart-page">
+        <div class="cart-page__content">
+            <a href="/shop" class="btn btn-no-border">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Continue Shopping
+            </a>
+            <div class="cart-page__content__block">
+                <h1>Shopping Cart</h1>
+                {% if cart|length > 0%}
+                    {% set total = 0 %}
+                    <div class="cart-container">
+                        <div class="cart-card">
+                            <div class="cart-card__header">
+                                <div></div>
+                                <div></div>
+                                <div class="cart-card__header__title">Item</div>
+                                <div class="cart-card__header__title">Quantity</div>
+                                <div class="cart-card__header__title">Price</div>
+                                <div class="cart-card__header__title">Subtotal</div>
+                            </div>
+                            {% for item in cart %}
+                                <div class="cart-card__item">
+                                    <div>
+                                        <a href="#" class="delete">
+                                            <span class="material-symbols-outlined">close</span>
+                                        </a>
+                                    </div>
+                                    <img src="{{ image(item.product.picture) }}" alt="{{ item.product.name }}">
+                                    <div class="cart-card__item__name">{{ item.product.name }}</div>
+                                    <div class="cart-card__item__quantity">
+                                        <select name="" id="" style="width: 100%">
+                                            <option value="1" {% if item.quantity == 1 %}selected{% endif %}>1</option>
+                                            <option value="2" {% if item.quantity == 2 %}selected{% endif %}>2</option>
+                                            <option value="3" {% if item.quantity == 3 %}selected{% endif %}>3</option>
+                                            <option value="4" {% if item.quantity == 4 %}selected{% endif %}>4</option>
+                                            <option value="5" {% if item.quantity == 5 %}selected{% endif %}>5</option>
+                                        </select>
+                                    </div>
+                                    <div class="cart-card__item__price">${{ item.product.price|formatPrice }}</div>
+                                    <div class="cart-card__item__total">${{ (item.product.price * item.quantity)|formatPrice }}</div>
+                                </div>
+                                {% set total = total + (item.product.price * item.quantity) %}
+                            {% endfor %}
+                        </div>
+                        <div class="cart-summary">
+                            <div class="cart-summary__title">Summary</div>
+                            <div class="cart-summary__content">
+                                <div class="cart-summary__content__line">
+                                    <div class="title">Subtotal</div>
+                                    <div class="value">${{ total|formatPrice }}</div>
+                                </div>
+                                <div class="cart-summary__content__line">
+                                    <div class="title">Shipping</div>
+                                    {% set shipping = 5000 %}
+                                    {% if total > 15000 %}
+                                        {% set shipping = 0 %}
+                                    {% endif %}
+                                    <div class="value">${{ shipping|formatPrice }}</div>
+                                </div>
+                                <div class="cart-summary__total">
+                                    <div class="title">Total</div>
+                                    <div class="value">${{ (total + shipping)|formatPrice }}</div>
+                                </div>
+                                <div class="cart-summary__footer">
+                                    <input type="text" placeholder="Enter coupon code here">
+                                    <button class="btn btn-primary">
+                                        <span class="material-symbols-outlined">lock</span>
+                                        Check Out
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="no-result">
+                        <div class="no-result__content">
+                            <div class="no-result__text">Your cart is empty</div>
+                            <a href="/shop" class="btn btn-primary">Start Shopping</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
