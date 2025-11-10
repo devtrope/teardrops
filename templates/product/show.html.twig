@@ -16,10 +16,7 @@
                 <div class="product-page__informations">
                     <div class="product-page__informations__title">{{ product.name }}</div>
                     <div class="product-page__informations__price">${{ product.price|formatPrice }}</div>
-                    <div class="product-page__informations__description">
-                        Handcrafted ceramic vase with organic form and natural glaze. Perfect for dried florals or as a standalone statement piece.
-                        Each vase is unique with subtle variations in color and texture.
-                    </div>
+                    <div class="product-page__informations__description">{{ product.description }}</div>
                     <div class="product-page__informations__details">
                         <div class="title">Product Details</div>
                         {% if product.details|length > 0 %}
