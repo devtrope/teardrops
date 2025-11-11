@@ -33,6 +33,6 @@ return [
     | The name of the application.
     |--------------------------------------------------------------------------
     */
-    'name' => env('APP_NAME', 'Teardrops'),
+    'name' => env('APP_NAME', 'Ludens'),
 
 ];
