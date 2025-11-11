@@ -51,4 +51,11 @@ class CartController extends AbstractController
         
         return $this->json(['success' => true]);
     }
+
+    public function delete(ModelManager $modelManager, Request $request): Response
+    {
+        $cart = $modelManager->get(Cart::class)->find($request->id);
+        $cart->delete();
+        return $this->json(['success' => true]);
+    }
 }

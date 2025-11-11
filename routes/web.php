@@ -10,3 +10,4 @@ Route::call([\App\Http\Controller\ProductController::class, 'display'])->when('/
 Route::call([\App\Http\Controller\CartController::class, 'index'])->when('/cart')->onGet();
 Route::call([\App\Http\Controller\CartController::class, 'add'])->when('/cart/add')->onPost();
 Route::call([\App\Http\Controller\CartController::class, 'update'])->when('/cart/update')->onPost();
+Route::call([\App\Http\Controller\CartController::class, 'delete'])->when('/cart/delete')->onPost();
