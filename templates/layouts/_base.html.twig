@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 </head>
 <body>
@@ -28,15 +28,15 @@
             <div class="navbar-content__cta">
                 <a href="/cart"><span class="material-symbols-outlined">search</span></a>
                 <a href="/cart"><span class="material-symbols-outlined">shopping_cart</span></a>
-                <a href="/cart"><span class="material-symbols-outlined">person</span></a>
+                <a href="/login"><span class="material-symbols-outlined">person</span></a>
             </div>
         </div>
     </nav>
     {% block content %}{% endblock %}
-    <div class="toast-container hidden">
+    <div class="toast-container {% if flash('success') == false %}hidden{% endif %}">
         <div class="toast">
-            <div class="toast-title"></div>
-            <div class="toast-body"></div>
+            <div class="toast-title">{% if flash('success') %}Success{% endif %}</div>
+            <div class="toast-body">{% if flash('success') %}{{ flash('success') }}{% endif %}</div>
         </div>
     </div>
 </body>

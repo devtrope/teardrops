@@ -24,7 +24,7 @@ class ProductController extends AbstractController
 
         if ($request->order) {
             $suffix = (int) $request->order === 1 ? 'ASC' : 'DESC';
-            $products->order('price', $suffix);
+            $products->orderBy('price', $suffix);
         }
 
         if ($request->offset) {

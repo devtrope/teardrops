@@ -1,0 +1,30 @@
+{% extends "layouts/_base.html.twig" %}
+
+{% block title %}{{ config('app.name') }} - Register{% endblock %}
+
+{% block content %}
+    <div class="auth-page">
+        <div class="auth-card">
+            <h1>Welcome to Aura</h1>
+            <h2>Create an account to start shopping</h2>
+            <form action="/register" method="POST">
+                <div class="input-block">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" placeholder="you@example.org" value="{{ old('email') }}" {% if error('email') %}class="invalid"{% endif %}>
+                    {% if error('email') %}
+                        <div class="invalid-text">{{ error('email') }}</div>
+                    {% endif %}
+                </div>
+                <div class="input-block">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" {% if error('password') %}class="invalid"{% endif %}>
+                    {% if error('password') %}
+                        <div class="invalid-text">{{ error('password') }}</div>
+                    {% endif %}
+                </div>
+                <button class="btn btn-primary">Sign Up</button>
+            </form>
+            <div class="bottom-text">Already have an account ? <a href="/login">Sign in</a></div>
+        </div>
+    </div>
+{% endblock %}
