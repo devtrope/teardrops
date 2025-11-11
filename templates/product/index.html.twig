@@ -11,8 +11,23 @@
             </a>
             <div class="product__card__body__footer">
                 <div class="product__card__body__footer__price">${{ product.price|formatPrice }}</div>
-                <button class="btn btn-primary">Add to Cart</button>
+                <button class="btn btn-primary add-to-cart" data-id="{{ product.id }}">Add to Cart</button>
             </div>
         </div>
     </div>
 {% endfor %}
+<script>
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', e => {
+            fetch ('cart/add', {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    product: e.target.dataset.id
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        })
+    })
+</script>

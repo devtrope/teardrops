@@ -47,7 +47,15 @@
                 }
             })
             .then(data => data.text())
-            .then(content => document.querySelector('.products').innerHTML = content)
+            .then(content => {
+                document.querySelector('.products').innerHTML = content
+                Array.from(document.querySelector('.products').querySelectorAll('script')).forEach(script =>
+                {
+                    const newScript = document.createElement('script')
+                    newScript.textContent = script.textContent
+                    script.parentNode.replaceChild(newScript, script)
+                })
+            })
         })
 
         document.getElementById('load-more').addEventListener('click', () => {
@@ -64,7 +72,15 @@
                 }
             })
             .then(data => data.text())
-            .then(content => document.querySelector('.products').insertAdjacentHTML('beforeend', content))
+            .then(content => {
+                document.querySelector('.products').insertAdjacentHTML('beforeend', content)
+                Array.from(document.querySelector('.products').querySelectorAll('script')).forEach(script =>
+                {
+                    const newScript = document.createElement('script')
+                    newScript.textContent = script.textContent
+                    script.parentNode.replaceChild(newScript, script)
+                })
+            })
         })
     </script>
 {% endblock %}
