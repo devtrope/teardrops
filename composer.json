@@ -1,5 +1,5 @@
 {
-    "name": "devtrope/teardrops",
+    "name": "devtrope/ludens",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -23,13 +23,13 @@
         "squizlabs/php_codesniffer": "^4.0"
     },
     "require": {
-        "devtrope/ludens": "*",
+        "devtrope/framework": "dev-main",
         "twig/twig": "^3.21"
     },
     "repositories": [
         {
             "type": "path",
-            "url": "../ludens",
+            "url": "../framework",
             "options": {
                 "symlink": true
             }
