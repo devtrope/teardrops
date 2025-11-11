@@ -543,6 +543,7 @@ select {
     background: #FFF;
     border: 1px solid var(--border);
     padding: 32px;
+    border-radius: 8px;
 }
 
 .cart-summary__title {

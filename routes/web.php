@@ -9,3 +9,4 @@ Route::call([\App\Http\Controller\ProductController::class, 'index'])->when('/pr
 Route::call([\App\Http\Controller\ProductController::class, 'display'])->when('/products/{id}')->onGet();
 Route::call([\App\Http\Controller\CartController::class, 'index'])->when('/cart')->onGet();
 Route::call([\App\Http\Controller\CartController::class, 'add'])->when('/cart/add')->onPost();
+Route::call([\App\Http\Controller\CartController::class, 'update'])->when('/cart/update')->onPost();

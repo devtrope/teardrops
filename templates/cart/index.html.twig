@@ -33,7 +33,7 @@
                                     <img src="{{ image(item.product.picture) }}" alt="{{ item.product.name }}">
                                     <div class="cart-card__item__name">{{ item.product.name }}</div>
                                     <div class="cart-card__item__quantity">
-                                        <select name="" id="" style="width: 100%">
+                                        <select name="quantity" id="quantity-{{ item.id }}" data-id="{{ item.id }}" style="width: 100%">
                                             <option value="1" {% if item.quantity == 1 %}selected{% endif %}>1</option>
                                             <option value="2" {% if item.quantity == 2 %}selected{% endif %}>2</option>
                                             <option value="3" {% if item.quantity == 3 %}selected{% endif %}>3</option>
@@ -41,8 +41,8 @@
                                             <option value="5" {% if item.quantity == 5 %}selected{% endif %}>5</option>
                                         </select>
                                     </div>
-                                    <div class="cart-card__item__price">${{ item.product.price|formatPrice }}</div>
-                                    <div class="cart-card__item__total">${{ (item.product.price * item.quantity)|formatPrice }}</div>
+                                    <div class="cart-card__item__price" id="item-price-{{ item.id }}" data-price="{{ item.product.price }}">${{ item.product.price|formatPrice }}</div>
+                                    <div class="cart-card__item__total" id="item-total-{{ item.id }}" data-total="{{ item.product.price * item.quantity }}">${{ (item.product.price * item.quantity)|formatPrice }}</div>
                                 </div>
                                 {% set total = total + (item.product.price * item.quantity) %}
                             {% endfor %}
@@ -52,7 +52,7 @@
                             <div class="cart-summary__content">
                                 <div class="cart-summary__content__line">
                                     <div class="title">Subtotal</div>
-                                    <div class="value">${{ total|formatPrice }}</div>
+                                    <div class="value" id="summary-subtotal" data-subtotal="{{ total }}">${{ total|formatPrice }}</div>
                                 </div>
                                 <div class="cart-summary__content__line">
                                     <div class="title">Shipping</div>
@@ -60,11 +60,11 @@
                                     {% if total > 15000 %}
                                         {% set shipping = 0 %}
                                     {% endif %}
-                                    <div class="value">${{ shipping|formatPrice }}</div>
+                                    <div class="value" id="summary-shipping">${{ shipping|formatPrice }}</div>
                                 </div>
                                 <div class="cart-summary__total">
                                     <div class="title">Total</div>
-                                    <div class="value">${{ (total + shipping)|formatPrice }}</div>
+                                    <div class="value" id="summary-total">${{ (total + shipping)|formatPrice }}</div>
                                 </div>
                                 <div class="cart-summary__footer">
                                     <input type="text" placeholder="Enter coupon code here">
@@ -87,4 +87,66 @@
             </div>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('select[name="quantity"]').forEach(quantity => {
+            quantity.addEventListener('change', e => {
+                let id = e.target.dataset.id
+                let unitPrice = document.getElementById('item-price-' + id).dataset.price
+                let total = (unitPrice * e.target.value) / 100
+                
+                document.getElementById('item-total-' + id).innerHTML = '$' + number_format(total, 2, '.', ',')
+                document.getElementById('item-total-' + id).dataset.total = unitPrice * e.target.value
+
+                let totalValue = 0
+
+                document.querySelectorAll('.cart-card__item__total').forEach(totalItem => {
+                    totalValue = totalValue + parseInt(totalItem.dataset.total)
+                })
+
+                document.getElementById('summary-subtotal').innerHTML = '$' + number_format((totalValue / 100), 2, '.', ',')
+
+                let shipping = 5000
+                if (totalValue > 15000) {
+                    shipping = 0
+                }
+
+                document.getElementById('summary-shipping').innerHTML = '$' + number_format((shipping / 100), 2, '.', ',')
+                document.getElementById('summary-total').innerHTML = '$' + number_format(((totalValue + shipping) / 100), 2, '.', ',')
+
+                fetch ('/cart/update', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        id: id,
+                        quantity: e.target.value
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            })
+        })
+
+        function number_format(number, decimals, dec_point, thousands_sep) {
+            number = (number + '').replace(/[^0-9+\-Ee.]/g, '')
+            var n = !isFinite(+number) ? 0 : +number,
+                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                s = '',
+                toFixedFix = function (n, prec) {
+                    var k = Math.pow(10, prec)
+                    return '' + Math.round(n * k) / k
+                }
+
+            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.')
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
+            }
+            if ((s[1] || '').length < prec) {
+                s[1] = s[1] || ''
+                s[1] += new Array(prec - s[1].length + 1).join('0')
+            }
+            return s.join(dec)
+        }
+    </script>
 {% endblock %}

@@ -42,4 +42,13 @@ class CartController extends AbstractController
 
         return $this->json(['success' => true, 'title' => 'Added to cart', 'message' => $product->name . ' has been added to your cart.']);
     }
+
+    public function update(ModelManager $modelManager, Request $request): Response
+    {
+        $cart = $modelManager->get(Cart::class)->find($request->id);
+        $cart->quantity = $request->quantity;
+        $cart->update();
+        
+        return $this->json(['success' => true]);
+    }
 }
