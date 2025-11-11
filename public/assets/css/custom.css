@@ -608,3 +608,42 @@ input:focus {
     outline: none;
     border-color: var(--primary);
 }
+
+.toast-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.toast-container.hidden {
+    display: none;
+}
+
+.toast {
+    background: #FFF;
+    border: 1px solid var(--border);
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1);
+    font-size: .8rem;
+    color: var(--foreground);
+    animation: up .3s;
+}
+
+@keyframes up {
+    from {
+        transform: translateY(50px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.toast-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
