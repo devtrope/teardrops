@@ -38,7 +38,7 @@ class AuthController extends AbstractController
     public function add(Request $request): Response
     {
         $this->validator()->fields($request, [
-            'email' => $this->validator()->rule()->required(),
+            'email' => $this->validator()->rule()->required()->email(),
             'password' => $this->validator()->rule()->required()->minLength(6)
         ]);
 
