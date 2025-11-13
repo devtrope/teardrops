@@ -3,9 +3,8 @@
 namespace App\Http\Controller;
 
 use Ludens\Http\Response;
-use Ludens\Framework\Controller\AbstractController;
 
-class HomeController extends AbstractController
+class HomeController extends BaseController
 {
     public function index(): Response
     {
