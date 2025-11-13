@@ -15,7 +15,8 @@ Route::call([\App\Http\Controller\CartController::class, 'add'])->when('/cart/ad
 Route::call([\App\Http\Controller\CartController::class, 'update'])->when('/cart/update')->onPost();
 Route::call([\App\Http\Controller\CartController::class, 'delete'])->when('/cart/delete')->onPost();
 
-Route::call([\App\Http\Controller\AuthController::class, 'login'])->when('/login')->onGet();
+Route::call([\App\Http\Controller\AuthController::class, 'login'])->when('/login')->withGuest()->onGet();
 Route::call([\App\Http\Controller\AuthController::class, 'sign'])->when('/login')->onPost();
-Route::call([\App\Http\Controller\AuthController::class, 'register'])->when('/register')->onGet();
+Route::call([\App\Http\Controller\AuthController::class, 'register'])->when('/register')->withGuest()->onGet();
 Route::call([\App\Http\Controller\AuthController::class, 'add'])->when('/register')->onPost();
+Route::call([\App\Http\Controller\AuthController::class, 'logout'])->when('/logout')->onPost();

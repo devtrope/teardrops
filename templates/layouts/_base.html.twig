@@ -28,7 +28,13 @@
             <div class="navbar-content__cta">
                 <a href="/cart"><span class="material-symbols-outlined">search</span></a>
                 <a href="/cart"><span class="material-symbols-outlined">shopping_cart</span></a>
-                <a href="/login"><span class="material-symbols-outlined">person</span></a>
+                {% if isAuth() %}
+                    <form action="/logout" method="POST">
+                        <button><span class="material-symbols-outlined">logout</span></button>
+                    </form>
+                {% else %}
+                    <a href="/login"><span class="material-symbols-outlined">person</span></a>
+                {% endif %}
             </div>
         </div>
     </nav>

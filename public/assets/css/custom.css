@@ -80,6 +80,15 @@ nav.navbar  {
     text-decoration: none;
 }
 
+.navbar-content__cta button
+{
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0 !important;
+    line-height: 0;
+}
+
 .navbar-content__cta > * span{
     font-size: 1.3rem;
     color: var(--foreground);

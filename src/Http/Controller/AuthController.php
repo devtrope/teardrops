@@ -3,11 +3,11 @@
 namespace App\Http\Controller;
 
 use App\Http\Model\User;
-use Ludens\Database\ModelManager;
-use Ludens\Http\Response;
-use Ludens\Framework\Controller\AbstractController;
 use Ludens\Http\Request;
+use Ludens\Http\Response;
+use Ludens\Database\ModelManager;
 use Ludens\Http\Support\SessionBag;
+use Ludens\Framework\Controller\AbstractController;
 
 class AuthController extends AbstractController
 {
@@ -27,6 +27,8 @@ class AuthController extends AbstractController
             return $this->redirect('/login')->withFlash('error', 'Invalid credentials');
         }
 
+        $session = new SessionBag();
+        $session->set('user_id', 1);
         return $this->redirect('/');
     }
 
@@ -47,6 +49,17 @@ class AuthController extends AbstractController
         $user->password = password_hash($request->password, PASSWORD_BCRYPT);
         $user->save();
 
+        $session = new SessionBag();
+        $session->set('user_id', $user->id);
+        
         return $this->redirect('/')->withFlash('success', 'Your account has been successfully created.');
+    }
+
+    public function logout(): Response
+    {
+        $session = new SessionBag();
+        $session->remove('user_id');
+
+        return $this->redirect('/');
     }
 }
