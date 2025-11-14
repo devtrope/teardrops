@@ -24,7 +24,8 @@
     },
     "require": {
         "devtrope/framework": "dev-main",
-        "twig/twig": "^3.21"
+        "twig/twig": "^3.21",
+        "php-di/php-di": "^7.1"
     },
     "repositories": [
         {
