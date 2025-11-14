@@ -7,9 +7,8 @@ use Ludens\Http\Request;
 use Ludens\Http\Response;
 use Ludens\Database\ModelManager;
 use Ludens\Http\Support\SessionBag;
-use Ludens\Framework\Controller\AbstractController;
 
-class AuthController extends AbstractController
+class AuthController extends BaseController
 {
     public function login(): Response
     {

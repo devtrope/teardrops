@@ -123,6 +123,15 @@
                         'Content-Type': 'application/json'
                     }
                 })
+                .then(() => {
+                    let cartCount = 0
+
+                    document.querySelectorAll('select[name="quantity"]').forEach(qty => {
+                        cartCount += parseInt(qty.value)
+                    })
+                        
+                    document.querySelector('.cart-count').innerHTML = cartCount
+                })
             })
         })
 

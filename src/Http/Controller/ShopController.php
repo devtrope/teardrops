@@ -5,9 +5,8 @@ namespace App\Http\Controller;
 use App\Http\Model\Category;
 use Ludens\Database\ModelManager;
 use Ludens\Http\Response;
-use Ludens\Framework\Controller\AbstractController;
 
-class ShopController extends AbstractController
+class ShopController extends BaseController
 {
     public function index(ModelManager $modelManager): Response
     {

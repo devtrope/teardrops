@@ -27,7 +27,10 @@
             </div>
             <div class="navbar-content__cta">
                 <a href="/cart"><span class="material-symbols-outlined">search</span></a>
-                <a href="/cart"><span class="material-symbols-outlined">shopping_cart</span></a>
+                <div class="cart-nav-container">
+                    <a href="/cart"><span class="material-symbols-outlined">shopping_cart</span></a>
+                    <div class="cart-count {% if cartItemsCount == 0 %}hidden{% endif %}">{{ cartItemsCount }}</div>
+                </div>
                 {% if isAuth() %}
                     <form action="/logout" method="POST">
                         <button><span class="material-symbols-outlined">logout</span></button>

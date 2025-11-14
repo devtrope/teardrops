@@ -5,29 +5,36 @@ namespace App\Http\Controller;
 use App\Http\Model\Cart;
 use App\Http\Model\Product;
 use Ludens\Database\ModelManager;
-use Ludens\Framework\Controller\AbstractController;
 use Ludens\Http\Request;
 use Ludens\Http\Response;
 
-class CartController extends AbstractController
+class CartController extends BaseController
 {
-    public function index(ModelManager $modelManager): Response
+    private ModelManager $modelManager;
+
+    public function __construct(ModelManager $modelManager)
     {
-        $cart = $modelManager->get(Cart::class)->all();
+        $this->modelManager = $modelManager;
+        return parent::__construct($modelManager);
+    }
+
+    public function index(): Response
+    {
+        $cart = $this->modelManager->get(Cart::class)->all();
         return $this->render('cart/index', ['cart' => $cart]);
     }
 
-    public function add(ModelManager $modelManager, Request $request): Response
+    public function add(Request $request): Response
     {
-        $currentCart = $modelManager->get(Cart::class)::query()->where('product_id', $request->product)->first();
-        $product = $modelManager->get(Product::class)->find($request->product);
+        $currentCart = $this->modelManager->get(Cart::class)::query()->where('product_id', $request->product)->first();
+        $product = $this->modelManager->get(Product::class)->find($request->product);
 
         if ($currentCart) {
             if ($currentCart['quantity'] === 5) {
                 return $this->json(['success' => false, 'title' => 'Maximum quantity', 'message' => 'You can\'t order more than 5 times the same item.']);
             }
 
-            $cart = $modelManager->get(Cart::class)->find($currentCart['id']);
+            $cart = $this->modelManager->get(Cart::class)->find($currentCart['id']);
             $cart->product_id = $request->product;
             $cart->quantity = $cart->quantity + 1;
             $cart->update();
@@ -43,18 +50,18 @@ class CartController extends AbstractController
         return $this->json(['success' => true, 'title' => 'Added to cart', 'message' => $product->name . ' has been added to your cart.']);
     }
 
-    public function update(ModelManager $modelManager, Request $request): Response
+    public function update(Request $request): Response
     {
-        $cart = $modelManager->get(Cart::class)->find($request->id);
+        $cart = $this->modelManager->get(Cart::class)->find($request->id);
         $cart->quantity = $request->quantity;
         $cart->update();
         
         return $this->json(['success' => true]);
     }
 
-    public function delete(ModelManager $modelManager, Request $request): Response
+    public function delete(Request $request): Response
     {
-        $cart = $modelManager->get(Cart::class)->find($request->id);
+        $cart = $this->modelManager->get(Cart::class)->find($request->id);
         $cart->delete();
         return $this->json(['success' => true]);
     }

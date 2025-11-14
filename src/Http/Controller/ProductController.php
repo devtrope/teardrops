@@ -5,14 +5,21 @@ namespace App\Http\Controller;
 use App\Http\Model\Product;
 use Ludens\Database\ModelManager;
 use Ludens\Http\Response;
-use Ludens\Framework\Controller\AbstractController;
 use Ludens\Http\Request;
 
-class ProductController extends AbstractController
+class ProductController extends BaseController
 {
-    public function index(ModelManager $modelManager, Request $request): Response
+    private ModelManager $modelManager;
+
+    public function __construct(ModelManager $modelManager)
     {
-        $products = $modelManager->get(Product::class)::query();
+        $this->modelManager = $modelManager;
+        return parent::__construct($modelManager);
+    }
+
+    public function index(Request $request): Response
+    {
+        $products = $this->modelManager->get(Product::class)::query();
 
         if ($request->limit) {
             $products->limit($request->limit);
@@ -35,9 +42,9 @@ class ProductController extends AbstractController
         return $this->render('product/index', data: ['products' => $products]);
     }
 
-    public function display(ModelManager $modelManager, string $id): Response
+    public function display(string $id): Response
     {
-        $product = $modelManager->get(Product::class)->find($id);
+        $product = $this->modelManager->get(Product::class)->find($id);
         return $this->render('product/show', ['product' => $product]);
     }
 }

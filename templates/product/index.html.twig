@@ -33,6 +33,10 @@
                 document.querySelector('.toast-container').classList.remove('hidden')
                 document.querySelector('.toast-title').innerHTML = json.title
                 document.querySelector('.toast-body').innerHTML = json.message
+                document.querySelector('.cart-count').classList.remove('hidden')
+
+                let cartCount = document.querySelector('.cart-count').innerHTML
+                document.querySelector('.cart-count').innerHTML = parseInt(cartCount) + 1
             })
         })
     })
