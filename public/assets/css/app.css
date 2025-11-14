@@ -1,0 +1,11 @@
+@keyframes colorFade {
+    0%   { background-color: #d1fae5; } /* emerald-100 */
+    25%  { background-color: #bfdbfe; } /* blue-100 */
+    50%  { background-color: #fef3c7; } /* yellow-100 */
+    75%  { background-color: #fbcfe8; } /* pink-100 */
+    100% { background-color: #d1fae5; }
+}
+
+.animate-color {
+    animation: colorFade 15s infinite linear;
+}
